@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="EduVation Summit 2016"
-        android:textSize="17sp"
+        android:textSize="20sp"
         android:textColor="@color/colorPrimary"
         android:textStyle="bold"
         android:layout_marginLeft="8dp"
@@ -27,7 +27,7 @@
         android:layout_marginTop="6dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:text="@string/home_desc1"/>
+        android:id="@+id/home_desc1"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -35,6 +35,14 @@
         android:layout_marginTop="6dp"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:text="@string/home_desc2"/>
+        android:id="@+id/home_desc2"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        android:id="@+id/home_desc3"/>
 
 </LinearLayout>

@@ -3,6 +3,7 @@ package org.mat.eduvation;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -25,6 +26,8 @@ public class navigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private Toolbar toolbar;
     private ActionBarDrawerToggle mDrawerToggle;
+    private String title="";
+    Fragment fragment = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +36,10 @@ public class navigation extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setTitle("Home");
+
         //Set the fragment initially
-        home fragment = new home();
+        fragment = new home();
         android.support.v4.app.FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
@@ -104,102 +109,63 @@ public class navigation extends AppCompatActivity
 
         if (id == R.id.Home) {
 
-            toolbar.setSubtitle("Home");
+            title="Home";
 
-            home fragment = new home();
+            fragment = new home();
 
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment);
-            fragmentTransaction.commit();
-
-            // Handle the camera action
         } else if (id == R.id.Attendance) {
 
-            toolbar.setSubtitle("Attendance");
-            Attendance fragment2 = new Attendance();
-
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment2);
-            fragmentTransaction.commit();
+            title="Attendance";
+            fragment = new Attendance();
 
         } else if (id == R.id.Schedule) {
 
-            toolbar.setSubtitle("Schedule");
+            title="Schedule";
 
-            Schedule fragment2 = new Schedule();
-
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment2);
-            fragmentTransaction.commit();
+            fragment = new Schedule();
 
         } else if (id == R.id.Speakers) {
 
-            toolbar.setSubtitle("Speakers");
+            title="Speakers";
 
-            Speakers fragment2 = new Speakers();
-
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment2);
-            fragmentTransaction.commit();
+            fragment = new Speakers();
 
         } else if (id == R.id.Sponsors) {
 
-            toolbar.setSubtitle("Sponsors And Partners");
+            title="Sponsors And Partners";
 
-            SponsorsAndPartners fragment2 = new SponsorsAndPartners();
-
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment2);
-            fragmentTransaction.commit();
+            fragment = new SponsorsAndPartners();
 
         } else if (id == R.id.Location) {
 
-            toolbar.setSubtitle("Find Us");
+            title="Find Us";
 
-            FindUs fragment2 = new FindUs();
-
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment2);
-            fragmentTransaction.commit();
+            fragment = new FindUs();
 
         }else if (id == R.id.ContactUs) {
 
-            toolbar.setSubtitle("Contact Us");
+            title="Contact Us";
 
-            ContactUs fragment2 = new ContactUs();
-
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment2);
-            fragmentTransaction.commit();
+            fragment = new ContactUs();
 
         }else if (id == R.id.Logout) {
-            toolbar.setSubtitle("Logout");
-            Logout fragment2 = new Logout();
-
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment2);
-            fragmentTransaction.addToBackStack(null).commit();
+            title="Logout";
+            fragment = new Logout();
 
         }else if (id == R.id.announcements) {
 
-            toolbar.setSubtitle("Announcements");
+            title="Announcements";
 
-            Announcements fragment2 = new Announcements();
-
-            android.support.v4.app.FragmentTransaction fragmentTransaction =
-                    getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment2);
-            fragmentTransaction.commit();
+            fragment = new Announcements();
 
         }
+
+        android.support.v4.app.FragmentTransaction fragmentTransaction =
+                getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.commit();
+
+        getSupportActionBar().setTitle(title);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

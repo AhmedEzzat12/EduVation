@@ -1,13 +1,32 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="org.mat.eduvation.navigation_items.Schedule">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <include android:id="@+id/app_bar"
+        layout="@layout/toolbar"></include>
 
-</FrameLayout>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layoutsch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#FFF"
+        app:tabTextColor="#000"
+        app:tabSelectedTextColor="@color/colorAccent"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_below="@id/app_bar"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pagersch"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="#FFF"
+        android:layout_below="@+id/tab_layoutsch" />
+
+
+</RelativeLayout>

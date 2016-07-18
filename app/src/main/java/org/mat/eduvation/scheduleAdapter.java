@@ -4,13 +4,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import org.mat.eduvation.ScheduleFragment.Day1;
+import org.mat.eduvation.ScheduleFragment.Day2;
+
 /**
- * Created by gmgn on 7/10/2016.
+ * Created by ahmed on 7/18/2016.
  */
-public class PageAdapter extends FragmentStatePagerAdapter {
+public class scheduleAdapter extends FragmentStatePagerAdapter {
     int mNumOfTabs;
 
-    public PageAdapter(FragmentManager fm, int NumOfTabs) {
+    public scheduleAdapter (FragmentManager fm, int NumOfTabs) {
         super(fm);
         this.mNumOfTabs = NumOfTabs;
     }
@@ -20,9 +23,11 @@ public class PageAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                return new Signinfrag();
+
+                return new Day1();
             case 1:
-                return new Signupfrag();
+
+                return new Day2();
             default:
                 return null;
         }
