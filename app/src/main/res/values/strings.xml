@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">EduVation</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_navigation">navigation</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_desc1">New vision for Education Development through Technology by creating a great summit environment gathering all who interested in Edu-Tech future.</string>
+    <string name="home_desc2">EduVation Education and Innovation is: - A new call for using innovation in the educational industry. - A new shout for the nontraditional ways through which we can learn. - A deep insight into what is coming next in education. - Targeting all people interested in Educational and Technological fields and seeking for its development.</string>
+</resources>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "207302566905",
+    "firebase_url": "https://eduvation-7aff9.firebaseio.com",
+    "project_id": "eduvation-7aff9",
+    "storage_bucket": "eduvation-7aff9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207302566905:android:a7165ed97f8ab0ac",
+        "android_client_info": {
+          "package_name": "org.mat.eduvation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "207302566905-799b1oqp7p4eqemr1ujhlqmuh6g9v4li.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4sXwuPISyKiubn3dZwhy0y55bl2W4SXg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

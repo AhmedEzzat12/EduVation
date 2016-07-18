@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/Home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Home" />
+        <item
+            android:id="@+id/Schedule"
+            android:icon="@drawable/ic_event_black_24dp"
+            android:title="Schedule" />
+        <item
+            android:id="@+id/Attendance"
+            android:icon="@drawable/ic_group_black_24dp"
+            android:title="Attendance" />
+        <item
+            android:id="@+id/Speakers"
+            android:icon="@drawable/ic_record_voice_over_black_24dp"
+            android:title="Speakers" />
+
+        <item
+            android:id="@+id/Sponsors"
+            android:icon="@drawable/ic_work_black_24dp"
+            android:title="Sponsors - Partners" />
+
+        <item
+            android:id="@+id/Location"
+            android:icon="@drawable/ic_place_black_24dp"
+            android:title="FindUs" />
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/announcements"
+                android:icon="@drawable/ic_notifications_black_24dp"
+                android:title="Announcements" />
+            <item
+                android:id="@+id/ContactUs"
+                android:icon="@drawable/ic_contact_mail_black_24dp"
+                android:title="Contact Us" />
+            <item
+                android:id="@+id/Logout"
+                android:icon="@drawable/ic_input_black_24dp"
+                android:title="Logout" />
+        </menu>
+    </item>
+
+</menu>
