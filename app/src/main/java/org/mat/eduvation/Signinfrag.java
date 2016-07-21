@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import org.mat.eduvation.navigation_items.Logout;
+
 public class Signinfrag extends Fragment {
 
     private EditText email,password;
@@ -26,9 +28,33 @@ public class Signinfrag extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null && !Logout.check) {
+            Logout.check = true;
+            startActivity(new Intent(getContext(), navigation.class));
+        }
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null && !Logout.check) {
+            Logout.check = true;
+            startActivity(new Intent(getContext(), navigation.class));
+
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null && !Logout.check) {
+            Logout.check = true;
+            startActivity(new Intent(getContext(), navigation.class));
+
+        }
     }
 
     @Override

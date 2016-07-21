@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "207302566905-vvqdmt50t7ljhdrrkg0ibqp104mct40t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.mat.eduvation",
+            "certificate_hash": "F757495C1F99D549ABDA3763E6AD5BBCCAC7DF2C"
+          }
+        },
+        {
           "client_id": "207302566905-799b1oqp7p4eqemr1ujhlqmuh6g9v4li.apps.googleusercontent.com",
           "client_type": 3
         }

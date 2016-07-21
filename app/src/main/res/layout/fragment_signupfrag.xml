@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,61 +8,86 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="org.mat.eduvation.Home">
+    tools:context="org.mat.eduvation.Main">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <EditText
+        android:id="@+id/signupusername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/signupusername"
-        android:hint="Enter Your Name"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:ems="10"
+        android:hint="Enter Your Name"
+        android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/signupCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+            android:layout_below="@+id/signupusername"
+            android:ems="10"
+            android:hint="Company"
+            android:inputType="text" />
+
 
     <EditText
-        android:layout_width="wrap_content"
+        android:id="@+id/birthday"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/signupCompany"
         android:ems="10"
+        android:hint="Birthday"
+        android:inputType="date" />
+
+        <EditText
         android:id="@+id/signupemailid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
+            android:layout_below="@+id/birthday"
+            android:ems="10"
         android:hint="Enter your email"
-        android:layout_below="@+id/signupusername"/>
+            android:inputType="textEmailAddress" />
 
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
         android:id="@+id/signuppassid"
-        android:hint="password"
-        android:layout_below="@+id/signupemailid"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPassword"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/signupemailid"
         android:ems="10"
+        android:hint="password"
+        android:inputType="textPassword" />
+
+    <EditText
         android:id="@+id/signupconfirmpassid"
-        android:hint="confirm password"
-        android:layout_below="@+id/signuppassid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/signuppassid"
+        android:ems="10"
+        android:hint="confirm password"
+        android:inputType="textPassword" />
     <Button
+        android:id="@+id/signupbtnid"
+        style="?attr/borderlessButtonStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="SignUp"
-        android:id="@+id/signupbtnid"
         android:layout_alignParentBottom="true"
+        android:layout_below="@id/signupconfirmpassid"
         android:layout_centerHorizontal="true"
-        style="?attr/borderlessButtonStyle"
+        android:text="SignUp"
         android:textColor="@color/colorAccent"
         android:textSize="20sp"/>
-
-
 </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

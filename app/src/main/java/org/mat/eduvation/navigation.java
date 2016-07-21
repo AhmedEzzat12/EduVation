@@ -11,23 +11,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import org.mat.eduvation.navigation_items.Announcements;
 import org.mat.eduvation.navigation_items.Attendance;
 import org.mat.eduvation.navigation_items.ContactUs;
 import org.mat.eduvation.navigation_items.FindUs;
 import org.mat.eduvation.navigation_items.Logout;
+import org.mat.eduvation.navigation_items.Profile;
 import org.mat.eduvation.navigation_items.Schedule;
 import org.mat.eduvation.navigation_items.Speakers;
 import org.mat.eduvation.navigation_items.SponsorsAndPartners;
 import org.mat.eduvation.navigation_items.home;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class navigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    Fragment fragment = null;
     private Toolbar toolbar;
     private ActionBarDrawerToggle mDrawerToggle;
     private String title="";
-    Fragment fragment = null;
+    private CircleImageView circleImageView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +51,7 @@ public class navigation extends AppCompatActivity
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
 
+
         DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
@@ -58,6 +65,18 @@ public class navigation extends AppCompatActivity
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_36dp);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View hView = navigationView.getHeaderView(0);
+        circleImageView = (CircleImageView) hView.findViewById(R.id.profile_image);
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Profile profile = new Profile();
+                android.support.v4.app.FragmentTransaction fragmentTransaction =
+                        getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, profile);
+                fragmentTransaction.commit();
+            }
+        });
         navigationView.setNavigationItemSelectedListener(this);
 
     }

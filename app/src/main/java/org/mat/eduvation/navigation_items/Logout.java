@@ -19,7 +19,7 @@ import org.mat.eduvation.R;
  */
 public class Logout extends Fragment {
 
-
+    public static Boolean check = false;
     public Logout() {
         // Required empty public constructor
     }
@@ -27,10 +27,9 @@ public class Logout extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        check = true;
         FirebaseAuth.getInstance().signOut();
-
         startActivity(new Intent(getContext(), Main.class));
-
     }
 
     @Override

@@ -17,20 +17,27 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class Signupfrag extends Fragment {
 
-    private TextView name,email,passwoard,confirmpass;
+    private TextView name, email, passwoard, confirmpass, company, birthday;
     private FirebaseAuth auth;
-
+    private FirebaseDatabase database;
+    private UserModel userModel;
+    private DatabaseReference users;
+    private String[] fields;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         auth=FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
 
     }
-
 
 
     @Override
@@ -42,7 +49,16 @@ public class Signupfrag extends Fragment {
         email= (TextView) root.findViewById(R.id.signupemailid);
         passwoard=(TextView)root.findViewById(R.id.signuppassid);
         confirmpass=(TextView)root.findViewById(R.id.signupconfirmpassid);
+        company = (TextView) root.findViewById(R.id.signupCompany);
+        birthday = (TextView) root.findViewById(R.id.birthday);
         Button register = (Button) root.findViewById(R.id.signupbtnid);
+
+
+        database = FirebaseDatabase.getInstance();
+        users = database.getReference("users");
+
+        userModel = new UserModel();
+
         auth=FirebaseAuth.getInstance();
 
         register.setOnClickListener(new View.OnClickListener() {
@@ -90,11 +106,17 @@ public class Signupfrag extends Fragment {
                 if (task.isSuccessful()) {
                     Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
 
+                    FirebaseUser user = task.getResult().getUser();
 
+                    UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(name.getText().toString())
+                            .build();
+
+                    user.updateProfile(userProfileChangeRequest);
+
+                    writeNewUser(name.getText().toString(), String.valueOf(auth.getCurrentUser().getEmail()),
+                            company.getText().toString(), birthday.getText().toString());
                     startActivity(new Intent(getContext(), navigation.class));
-                    // email.setText("");
-                    //passwoard.setText("");
-                    // confirmpass.setText("");
                 }
                 else {
                     // if email already registerd
@@ -109,5 +131,20 @@ public class Signupfrag extends Fragment {
 
             }
         });
+    }
+
+    private void writeNewUser(String name, String email, String company, String birthday) {
+        userModel = new UserModel(name, company, birthday, email);
+        fields = email.split("\\.");
+        UserModel.KEY = keyGenerator(fields);
+        users.child(UserModel.KEY).setValue(userModel);
+    }
+
+    private String keyGenerator(String[] s) {
+        String key = "edu";
+        for (String value : s) {
+            key += value;
+        }
+        return key;
     }
 }
