@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.mat.eduvation">
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -25,8 +24,7 @@
         <activity
             android:name=".navigation"
             android:label="@string/title_activity_navigation"
-            android:noHistory="true"
-            />
+            android:noHistory="true" />
     </application>
 
 </manifest>

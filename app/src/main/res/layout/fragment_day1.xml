@@ -52,7 +52,9 @@
                     android:src="@drawable/schedule2"
                     android:layout_marginLeft="20dp"
 
-                    />
+                    android:clickable="true"
+                    android:onClick="onImageClick"
+                    android:id="@+id/icon2" />
             </LinearLayout>
 
 

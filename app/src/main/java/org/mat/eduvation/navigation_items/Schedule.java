@@ -54,6 +54,9 @@ public class Schedule extends Fragment {
 
             }
         });
+
+
+
         return root ;
     }
 
