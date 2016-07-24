@@ -1,18 +1,22 @@
 package org.mat.eduvation.navigation_items;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 import org.mat.eduvation.Main;
 import org.mat.eduvation.R;
+import org.mat.eduvation.SaveSharedPreference;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,9 +31,19 @@ public class Logout extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        clearUserName(getContext());
+
         check = true;
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getContext(), Main.class));
+    }
+
+    public  void clearUserName(Context ctx)
+    {
+        SharedPreferences.Editor editor = SaveSharedPreference.getSharedPreferences(ctx).edit();
+        editor.clear(); //clear all stored data
+        editor.commit();
+        Toast.makeText(getContext(),"member deleted", Toast.LENGTH_LONG).show();
     }
 
     @Override

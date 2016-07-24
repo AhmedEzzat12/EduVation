@@ -1,0 +1,48 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="300dp"
+    android:layout_height="300dp"
+    android:background="#ffffffff">
+
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TEXTO ls;dsl;dsldm'smd'm'
+        kf;slfklskflskfl'ks'fk'skf'sk'f
+        jflsjfl;fjl;sjlf;jsl;fjls;jf
+        jls;fjl;sjfl;sj;j
+        jksjl;jsl;fj;sl
+        ;ksf;j;sjf;lsjfl;sjfl;jsl;
+        kf;slfklskflskfl'ks'fk'skf'sk'f
+        jflsjfl;fjl;sjlf;jsl;fjls;jf
+        jls;fjl;sjfl;sj;j
+        jksjl;jsl;fj;sl
+        ;ksf;j;sjf;lsjfl;sjfl;jsl;
+        kf;slfklskflskfl'ks'fk'skf'sk'f
+
+        "
+        android:id="@+id/text_dialog"
+        android:maxLines="15"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="20dp"
+        android:textSize="18sp"
+        android:textColor="#ff000000"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="OK"
+        android:id="@+id/btn_dialog"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_below="@+id/text_dialog"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffffff" />
+
+</RelativeLayout>

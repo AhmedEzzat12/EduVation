@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import org.mat.eduvation.navigation_items.Logout;
-
 public class Signinfrag extends Fragment {
 
     private EditText email,password;
@@ -29,13 +28,17 @@ public class Signinfrag extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() != null && !Logout.check) {
-            Logout.check = true;
+
+        if(SaveSharedPreference.getUserName(getContext()).length()> 0)
+        {
             startActivity(new Intent(getContext(), navigation.class));
         }
+
+
+
     }
 
-    @Override
+ /*   @Override
     public void onStart() {
         super.onStart();
         auth = FirebaseAuth.getInstance();
@@ -57,6 +60,8 @@ public class Signinfrag extends Fragment {
         }
     }
 
+    */
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,6 +78,7 @@ public class Signinfrag extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 signIn();
             }
         });
@@ -87,8 +93,17 @@ public class Signinfrag extends Fragment {
     }
     public void signIn(){
 
-        String emailtext=email.getText().toString();
+        final String emailtext=email.getText().toString();
         final String passtext=password.getText().toString();
+
+        if (TextUtils.isEmpty(emailtext)) {
+            Toast.makeText(getContext(), "Enter Your Email!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(passtext)) {
+            Toast.makeText(getContext(), "Enter email password!", Toast.LENGTH_SHORT).show();
+            return;
+        }
         //authenticate user
         auth.signInWithEmailAndPassword(emailtext, passtext)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -108,6 +123,7 @@ public class Signinfrag extends Fragment {
                             }
                         } else {
 
+                            SaveSharedPreference.setUserName(getContext(),emailtext);
                             startActivity(new Intent(getContext(), navigation.class));
                         }
                     }

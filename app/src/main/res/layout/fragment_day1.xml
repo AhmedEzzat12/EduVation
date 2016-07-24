@@ -1,13 +1,152 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="org.mat.eduvation.ScheduleFragment.Day1">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="false"
+    android:background="#d3d2d2">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        tools:context="org.mat.eduvation.navigation_items.Schedule"
+        >
 
-</FrameLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+            <LinearLayout
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/schedule1"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:id="@+id/imageView"
+                    />
+
+                <ImageView
+                    android:layout_width="3dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/schedule3"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginTop="0dp"
+                    />
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/schedule2"
+                    android:layout_marginLeft="20dp"
+
+                    android:clickable="true"
+                    android:onClick="onImageClick"
+                    android:id="@+id/icon2" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:orientation="vertical"
+                >
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Registration"
+                    android:id="@+id/textView2"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="35dp"
+                    android:textColor="#020202" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Registration"
+                    android:id="@+id/textView3"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+
+                    android:textColor="#010101" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="9:00 AM - 10:00 PM"
+                    android:id="@+id/textView4"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    />
+
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="First Session"
+                    android:id="@+id/textView55"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="45dp"
+
+                    android:textColor="#020202" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Investment in Egypt"
+                    android:id="@+id/textView33"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+
+                    android:textColor="#010101" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="10:15 AM - 10:35 PM"
+                    android:id="@+id/textView44"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="15dp"
+                    />
+
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+    </LinearLayout>
+
+
+
+
+
+</ScrollView>
