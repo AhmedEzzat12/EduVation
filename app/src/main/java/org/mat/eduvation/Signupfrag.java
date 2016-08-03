@@ -17,10 +17,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import org.mat.eduvation.LocaL_Database.DatabaseConnector;
 
 
 public class Signupfrag extends Fragment {
@@ -31,14 +31,27 @@ public class Signupfrag extends Fragment {
     private UserModel userModel;
     private DatabaseReference users;
     private String[] fields;
+    private DatabaseConnector databaseConnector;
+
+    public static String keyGenerator(String[] s) {
+        String key = "edu";
+        for (String value : s) {
+            key += value;
+        }
+        return key;
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         auth=FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+        databaseConnector = new DatabaseConnector(getActivity());
+        databaseConnector.open();
+
 
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +65,6 @@ public class Signupfrag extends Fragment {
         company = (TextView) root.findViewById(R.id.signupCompany);
         birthday = (TextView) root.findViewById(R.id.birthday);
         Button register = (Button) root.findViewById(R.id.signupbtnid);
-
 
         database = FirebaseDatabase.getInstance();
         users = database.getReference("users");
@@ -106,16 +118,15 @@ public class Signupfrag extends Fragment {
                 if (task.isSuccessful()) {
                     Toast.makeText(getActivity(), "success", Toast.LENGTH_SHORT).show();
 
-                    FirebaseUser user = task.getResult().getUser();
 
-                    UserProfileChangeRequest userProfileChangeRequest = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(name.getText().toString())
-                            .build();
+                    writeNewUser(name.getText().toString(), email.getText().toString().toLowerCase(),
+                            company.getText().toString(), String.valueOf(birthday.getText()));
 
-                    user.updateProfile(userProfileChangeRequest);
+                    databaseConnector.insertUser(name.getText().toString(), company.getText().toString(), String.valueOf(birthday.getText())
+                            , email.getText().toString(), UserModel.KEY);
 
-                    writeNewUser(name.getText().toString(), String.valueOf(auth.getCurrentUser().getEmail()),
-                            company.getText().toString(), birthday.getText().toString());
+                    SaveSharedPreference.setUserName(getContext(), email.getText().toString().toLowerCase());
+
                     startActivity(new Intent(getContext(), navigation.class));
                 }
                 else {
@@ -134,17 +145,9 @@ public class Signupfrag extends Fragment {
     }
 
     private void writeNewUser(String name, String email, String company, String birthday) {
-        userModel = new UserModel(name, company, birthday, email);
+        userModel = new UserModel(name, company, birthday, email.toLowerCase());
         fields = email.split("\\.");
         UserModel.KEY = keyGenerator(fields);
         users.child(UserModel.KEY).setValue(userModel);
-    }
-
-    private String keyGenerator(String[] s) {
-        String key = "edu";
-        for (String value : s) {
-            key += value;
-        }
-        return key;
     }
 }

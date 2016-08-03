@@ -44,7 +44,7 @@
         android:layout_below="@+id/signupCompany"
         android:ems="10"
         android:hint="Birthday"
-        android:inputType="date" />
+        android:inputType="number" />
 
         <EditText
         android:id="@+id/signupemailid"

@@ -43,10 +43,10 @@
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ahmed Ezzat"
             android:textColor="#fff"
             android:textSize="20sp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            tools:text="Ahmed Ezzat" />
     </LinearLayout>
 
 
@@ -78,10 +78,10 @@
             android:id="@+id/CompanyProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="company"
             android:textColor="#fff"
             android:textSize="20sp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            tools:text="company" />
     </LinearLayout>
 
     <LinearLayout
@@ -112,11 +112,19 @@
             android:id="@+id/EmailProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="email"
             android:textColor="#fff"
             android:textSize="20sp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            tools:text="email" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/editProfileButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:text="Edit Profile"
+        android:textColor="#fff" />
 
 </RelativeLayout>

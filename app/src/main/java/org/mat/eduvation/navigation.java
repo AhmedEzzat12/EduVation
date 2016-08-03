@@ -1,5 +1,6 @@
 package org.mat.eduvation;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
@@ -12,7 +13,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
+import org.mat.eduvation.LocaL_Database.DatabaseConnector;
 import org.mat.eduvation.navigation_items.Announcements;
 import org.mat.eduvation.navigation_items.Attendance;
 import org.mat.eduvation.navigation_items.ContactUs;
@@ -28,11 +31,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class navigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    Fragment fragment = null;
+    private Fragment fragment = null;
     private Toolbar toolbar;
     private ActionBarDrawerToggle mDrawerToggle;
     private String title="";
     private CircleImageView circleImageView;
+    private DatabaseConnector databaseConnector;
+    private TextView userNameTxtView, userCompanyTxtView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +83,35 @@ public class navigation extends AppCompatActivity
                 fragmentTransaction.commit();
             }
         });
+
+        userNameTxtView = (TextView) hView.findViewById(R.id.userHeaderName);
+
+        userNameTxtView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Profile profile = new Profile();
+                android.support.v4.app.FragmentTransaction fragmentTransaction =
+                        getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, profile);
+                fragmentTransaction.commit();
+            }
+        });
+
+
+        userCompanyTxtView = (TextView) hView.findViewById(R.id.userHeaderName);
+
+        userCompanyTxtView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Profile profile = new Profile();
+                android.support.v4.app.FragmentTransaction fragmentTransaction =
+                        getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragment_container, profile);
+                fragmentTransaction.commit();
+            }
+        });
+
+
         navigationView.setNavigationItemSelectedListener(this);
 
     }
@@ -190,4 +225,24 @@ public class navigation extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    private void getUser() {
+
+        Cursor cursor = databaseConnector.getUserByEmail(SaveSharedPreference.getUserName(this));
+
+        if (cursor != null && cursor.moveToFirst()) {
+
+            String temp;
+            TextView[] array = {userNameTxtView, userCompanyTxtView};
+            for (int i = 0; i < 2; ++i) {
+                temp = cursor.getString(i);
+                array[i].setText(temp);
+            }
+
+        }
+
+    }
+
+
 }

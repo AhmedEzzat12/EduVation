@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,24 +19,35 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.mat.eduvation.LocaL_Database.DatabaseConnector;
 
 public class Signinfrag extends Fragment {
 
+    private final String TAG_LOG = "SignInFragment";
     private EditText email,password;
     private FirebaseAuth auth;
+    private FirebaseDatabase database;
+    private DatabaseReference users;
+    private String[] fields;
+    private DatabaseConnector databaseConnector;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         auth = FirebaseAuth.getInstance();
-
+        database = FirebaseDatabase.getInstance();
+        databaseConnector = new DatabaseConnector(getActivity());
+        databaseConnector.open();
         if(SaveSharedPreference.getUserName(getContext()).length()> 0)
         {
             startActivity(new Intent(getContext(), navigation.class));
         }
-
-
-
     }
 
  /*   @Override
@@ -72,6 +84,8 @@ public class Signinfrag extends Fragment {
         password=(EditText)view.findViewById(R.id.signinpassid);
         Button login = (Button) view.findViewById(R.id.signinbtnid);
         TextView forgotpass = (TextView) view.findViewById(R.id.signinforgotid);
+
+        database = FirebaseDatabase.getInstance();
 
         auth = FirebaseAuth.getInstance();
 
@@ -122,14 +136,35 @@ public class Signinfrag extends Fragment {
                                 Toast.makeText(getContext(),"Failure", Toast.LENGTH_LONG).show();
                             }
                         } else {
+                            SaveSharedPreference.setUserName(getContext(), emailtext.toLowerCase());
 
-                            SaveSharedPreference.setUserName(getContext(),emailtext);
+                            if (!databaseConnector.isExist(emailtext.toLowerCase())) {
+                                saveCurrentDataToFB_DB(emailtext.toLowerCase());
+                            }
+
                             startActivity(new Intent(getContext(), navigation.class));
                         }
                     }
                 });
-
-
     }
 
+    public void saveCurrentDataToFB_DB(String email) {
+        fields = email.split("\\.");
+        final String key = Signupfrag.keyGenerator(fields);
+        users = database.getReference("users");
+        users.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                UserModel userModel = dataSnapshot.child(String.valueOf(key)).getValue(UserModel.class);
+                Log.d(TAG_LOG, userModel.getEmail());
+                databaseConnector.insertUser(userModel.getName(), userModel.getCompany(), String.valueOf(userModel.getB_date()), userModel.getEmail(), key);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 }
