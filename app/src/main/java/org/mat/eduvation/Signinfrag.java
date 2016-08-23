@@ -50,30 +50,6 @@ public class Signinfrag extends Fragment {
         }
     }
 
- /*   @Override
-    public void onStart() {
-        super.onStart();
-        auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() != null && !Logout.check) {
-            Logout.check = true;
-            startActivity(new Intent(getContext(), navigation.class));
-
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        auth = FirebaseAuth.getInstance();
-        if (auth.getCurrentUser() != null && !Logout.check) {
-            Logout.check = true;
-            startActivity(new Intent(getContext(), navigation.class));
-
-        }
-    }
-
-    */
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

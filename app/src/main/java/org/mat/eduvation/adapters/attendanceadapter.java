@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.mat.eduvation.R;
-import org.mat.eduvation.users;
+import org.mat.eduvation.UserModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +18,11 @@ import java.util.List;
  */
 public class attendanceadapter extends RecyclerView.Adapter<attendanceadapter.myholder>{
 
-    List<users> userslist=new ArrayList<>();
+    List<UserModel> userslist = new ArrayList<>();
     Context context;
     String namerow;
-public attendanceadapter(List<users> userslist1, Context context)
+
+    public attendanceadapter(List<UserModel> userslist1, Context context)
 {
     this.userslist=userslist1;
     this.context=context;

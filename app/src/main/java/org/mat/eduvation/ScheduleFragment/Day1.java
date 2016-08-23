@@ -36,7 +36,6 @@ public class Day1 extends Fragment {
             }
         });
 
-
                 return root;
     }
 

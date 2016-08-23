@@ -49,8 +49,6 @@ public class Signupfrag extends Fragment {
         database = FirebaseDatabase.getInstance();
         databaseConnector = new DatabaseConnector(getActivity());
         databaseConnector.open();
-
-
     }
 
     @Override

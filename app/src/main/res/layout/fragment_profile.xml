@@ -1,12 +1,21 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".navigation_items.Profile">
 
-    <include
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".navigation_items.Profile">
+
+        <include
         android:id="@+id/app_bar2"
-        layout="@layout/toolbar"></include>
+            layout="@layout/toolbar" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image_edit"
@@ -17,12 +26,15 @@
         android:layout_marginTop="20dp"
         android:src="@drawable/profilepic" />
 
-    <LinearLayout
+
+        <LinearLayout
         android:id="@+id/linear1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/profile_image_edit"
+            android:layout_marginEnd="6dp"
         android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
         android:layout_marginStart="6dp"
         android:layout_marginTop="18dp"
         android:background="@drawable/shape"
@@ -55,7 +67,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linear1"
+        android:layout_marginEnd="6dp"
         android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
         android:layout_marginStart="6dp"
         android:layout_marginTop="1dp"
         android:background="@drawable/shape"
@@ -89,7 +103,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/Linear2"
+        android:layout_marginEnd="6dp"
         android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
         android:layout_marginStart="6dp"
         android:layout_marginTop="1dp"
         android:background="@drawable/shape"
@@ -118,13 +134,14 @@
             tools:text="email" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/editProfileButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        android:text="Edit Profile"
-        android:textColor="#fff" />
 
+        <ImageView
+            android:id="@+id/testphoto"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_below="@+id/Linear3"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/profilepic" />
 </RelativeLayout>
+
+</ScrollView>

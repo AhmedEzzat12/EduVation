@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
 
     <TextView
+        android:id="@+id/itemname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:drawableLeft="@android:drawable/star_big_on"
         android:padding="25dp"
         android:text="   Name"
-
-        android:drawableLeft="@android:drawable/star_big_on"
-        android:textStyle="bold"
-        android:textSize="25sp"
-        android:background="#ffffff"
-        android:id="@+id/itemname"
-        android:layout_gravity="center_horizontal" />
+        android:textSize="15sp"
+        android:textStyle="bold" />
 </LinearLayout>

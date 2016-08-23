@@ -1,6 +1,5 @@
 package org.mat.eduvation;
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
@@ -224,24 +223,6 @@ public class navigation extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-
-    private void getUser() {
-
-        Cursor cursor = databaseConnector.getUserByEmail(SaveSharedPreference.getUserName(this));
-
-        if (cursor != null && cursor.moveToFirst()) {
-
-            String temp;
-            TextView[] array = {userNameTxtView, userCompanyTxtView};
-            for (int i = 0; i < 2; ++i) {
-                temp = cursor.getString(i);
-                array[i].setText(temp);
-            }
-
-        }
-
     }
 
 
