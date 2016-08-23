@@ -4,13 +4,11 @@ package org.mat.eduvation.navigation_items;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-
+import org.mat.eduvation.FirebaseMessaging.MyFCMService;
 import org.mat.eduvation.R;
 
 /**
@@ -18,7 +16,7 @@ import org.mat.eduvation.R;
  */
 public class Announcements extends Fragment {
 
-
+    private MyFCMService myFCMService;
     public Announcements() {
         // Required empty public constructor
     }
@@ -27,8 +25,6 @@ public class Announcements extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.e("Token is ", FirebaseInstanceId.getInstance().getToken());
-        
     }
 
     @Override
