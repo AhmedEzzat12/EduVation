@@ -22,12 +22,10 @@ public class attendanceadapter extends RecyclerView.Adapter<attendanceadapter.my
     Context context;
     String namerow;
 
-    public attendanceadapter(List<UserModel> userslist1, Context context)
-{
+    public attendanceadapter(List<UserModel> userslist1, Context context) {
     this.userslist=userslist1;
     this.context=context;
-
-}
+    }
     @Override
     public myholder onCreateViewHolder(ViewGroup parent, int viewType) {
 

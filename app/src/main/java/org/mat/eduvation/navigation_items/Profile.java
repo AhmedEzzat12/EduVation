@@ -136,7 +136,6 @@ public class Profile extends Fragment {
     private void galleryIntent() {
         Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(pickPhoto, SELECT_FILE);
-
     }
 
     private void cameraIntent() {
@@ -151,6 +150,10 @@ public class Profile extends Fragment {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == SELECT_FILE) {
                 Uri selectedImage = data.getData();
+                imageview.setImageURI(selectedImage);
+                if (true)
+                    return;
+
 /*
                     Picasso.with(getBaseContext()).load(ProfilePictureUrl)
                             .placeholder(R.drawable.ic_profile)

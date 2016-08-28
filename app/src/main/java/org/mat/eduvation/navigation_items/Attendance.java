@@ -19,7 +19,6 @@ import com.firebase.client.ValueEventListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.mat.eduvation.LocaL_Database.DatabaseConnector;
 import org.mat.eduvation.R;
 import org.mat.eduvation.UserModel;
 import org.mat.eduvation.adapters.attendanceadapter;
@@ -33,13 +32,11 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class Attendance extends Fragment {
-    private UserModel user;
     private List<UserModel> UserModellist;
     private DatabaseReference mDatabase;
     private attendanceadapter adapter;
     private View root;
     private FirebaseDatabase database;
-    private DatabaseConnector databaseConnector;
 
     public Attendance() {
         // Required empty public constructor
@@ -52,8 +49,6 @@ public class Attendance extends Fragment {
         Firebase.setAndroidContext(getContext());
         mDatabase = FirebaseDatabase.getInstance().getReference();
         database = FirebaseDatabase.getInstance();
-        databaseConnector = new DatabaseConnector(getActivity());
-        databaseConnector.open();
     }
 
     @Override
@@ -67,7 +62,6 @@ public class Attendance extends Fragment {
         ref.addValueEventListener(new ValueEventListener() {
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-        System.out.println(dataSnapshot.getValue());
      //   Toast.makeText(getContext(),"success",Toast.LENGTH_LONG).show();
         HashMap<String, UserModel> data = dataSnapshot.getValue(new GenericTypeIndicator<HashMap<String, UserModel>>() {
         });

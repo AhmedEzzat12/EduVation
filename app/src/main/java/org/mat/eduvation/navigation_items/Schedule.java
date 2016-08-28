@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.mat.eduvation.R;
-import org.mat.eduvation.scheduleAdapter;
+import org.mat.eduvation.adapters.scheduleAdapter;
 
 /**
  * A simple {@link Fragment} subclass.

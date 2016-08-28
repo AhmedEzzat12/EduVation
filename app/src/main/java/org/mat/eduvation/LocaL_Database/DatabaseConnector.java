@@ -29,7 +29,7 @@ public class DatabaseConnector {
                 dbHelper.COLUMN_EMAIL, dbHelper.COLUMN_BIRTHDATE, dbHelper.COLUMN_FBKEY};
 
         return db.query(
-                dbHelper.TABLE_NAME,
+                dbHelper.TABLE1_NAME,
                 col,
                 null,
                 null,
@@ -44,7 +44,7 @@ public class DatabaseConnector {
                 dbHelper.COLUMN_EMAIL, dbHelper.COLUMN_BIRTHDATE, dbHelper.COLUMN_FBKEY};
 
         return db.query(
-                dbHelper.TABLE_NAME, // table name
+                dbHelper.TABLE1_NAME, // table name
                 columns, // column names
                 dbHelper.COLUMN_EMAIL + " = '" + email + "'", // where clause // id param. could be here or appended as it is ^
                 null, // where params
@@ -57,7 +57,7 @@ public class DatabaseConnector {
     public void deleteUserById(int id) {
         open();
         db.delete(
-                dbHelper.TABLE_NAME, // table name
+                dbHelper.TABLE1_NAME, // table name
                 dbHelper.COLUMN_ID + "=" + id, // where clause
                 null // where params
         );
@@ -73,7 +73,7 @@ public class DatabaseConnector {
         newItem.put(dbHelper.COLUMN_FBKEY, FB_KEY);
         newItem.put(dbHelper.COLUMN_BIRTHDATE, Birthday);
 
-        db.insert(dbHelper.TABLE_NAME, null, newItem);
+        db.insert(dbHelper.TABLE1_NAME, null, newItem);
 
     }
 
@@ -83,7 +83,7 @@ public class DatabaseConnector {
 
 
         Cursor cursor = db.query(
-                dbHelper.TABLE_NAME, // table name
+                dbHelper.TABLE1_NAME, // table name
                 columns, // column names
                 dbHelper.COLUMN_EMAIL + " = '" + email + "'", // where clause // id param. could be here or appended as it is ^
                 null, // where params
@@ -104,11 +104,39 @@ public class DatabaseConnector {
     public boolean deleteAllUsers() {
 
         int doneDelete = 0;
-        doneDelete = db.delete(dbHelper.TABLE_NAME, null, null);
+        doneDelete = db.delete(dbHelper.TABLE1_NAME, null, null);
         Log.w("num of rows deleted", Integer.toString(doneDelete));
         return doneDelete > 0;
 
     }
+
+    // Notification Table methods
+
+    public void insertNotification(String Message, String Date) {
+
+        ContentValues newItem = new ContentValues();
+        newItem.put(dbHelper.COLUMN_MESSAGE, Message);
+        newItem.put(dbHelper.COLUMN_DATE, Date);
+
+        db.insert(dbHelper.TABLE2_NAME, null, newItem);
+
+    }
+
+
+    public Cursor getAllNotifications() {
+        String[] col = {dbHelper.COLUMN2_ID, dbHelper.COLUMN_MESSAGE, dbHelper.COLUMN_DATE};
+
+        return db.query(
+                dbHelper.TABLE2_NAME,
+                col,
+                null,
+                null,
+                null,
+                null,
+                null
+        );
+    }
+
 
 
 }

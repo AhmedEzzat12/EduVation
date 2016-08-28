@@ -6,7 +6,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 
 public class dbHelper extends SQLiteOpenHelper {
-    public static final String TABLE_NAME = "USER";
+    //users table
+    public static final String TABLE1_NAME = "USER";
     public static final String COLUMN_ID = "_ID";
     public static final String COLUMN_NAME = "NAME";
     public static final String COLUMN_COMPANY = "COMPANY";
@@ -14,10 +15,23 @@ public class dbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_BIRTHDATE = "BIRTHDATE";
     public static final String COLUMN_FBKEY = "FIREBASEKEY";
 
+
+    //notification table
+    public static final String TABLE2_NAME = "NOTIFICATION";
+    public static final String COLUMN2_ID = "_ID";
+    public static final String COLUMN_MESSAGE = "MESSAGE";
+    public static final String COLUMN_DATE = "DATEANDTIME";
+
+
+
+
+
     private static final String DB_NAME = "eduvation.db";
     private static final int DB_VERSION = 1;
-    private static final String DB_CREATE =
-            "CREATE TABLE " + TABLE_NAME + "(" +
+
+
+    private static final String TABLE1_CREATE =
+            "CREATE TABLE " + TABLE1_NAME + "(" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_NAME + " TEXT, " +
                     COLUMN_FBKEY + " TEXT, " +
@@ -25,18 +39,28 @@ public class dbHelper extends SQLiteOpenHelper {
                     COLUMN_EMAIL + " TEXT, " +
                     COLUMN_BIRTHDATE + " TEXT);";
 
+
+    private static final String TABLE2_CREATE =
+            "CREATE TABLE " + TABLE2_NAME + "(" +
+                    COLUMN2_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_MESSAGE + " TEXT, " +
+                    COLUMN_DATE + " TEXT);";
     public dbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DB_CREATE);
+        db.execSQL(TABLE1_CREATE);
+        db.execSQL(TABLE2_CREATE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE1_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE2_NAME);
+
         onCreate(db);
     }
 }

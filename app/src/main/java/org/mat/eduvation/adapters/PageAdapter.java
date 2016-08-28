@@ -1,8 +1,11 @@
-package org.mat.eduvation;
+package org.mat.eduvation.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+
+import org.mat.eduvation.Signinfrag;
+import org.mat.eduvation.Signupfrag;
 
 /**
  * Created by gmgn on 7/10/2016.

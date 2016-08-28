@@ -1,4 +1,4 @@
-package org.mat.eduvation;
+package org.mat.eduvation.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
