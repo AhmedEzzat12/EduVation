@@ -14,7 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import org.mat.eduvation.LocaL_Database.DatabaseConnector;
+import com.google.android.gms.maps.GoogleMap;
+
 import org.mat.eduvation.navigation_items.Announcements;
 import org.mat.eduvation.navigation_items.Attendance;
 import org.mat.eduvation.navigation_items.ContactUs;
@@ -29,20 +30,20 @@ import org.mat.eduvation.navigation_items.home;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class navigation extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
     private Fragment fragment = null;
     private Toolbar toolbar;
     private ActionBarDrawerToggle mDrawerToggle;
     private String title="";
     private CircleImageView circleImageView;
-    private DatabaseConnector databaseConnector;
     private TextView userNameTxtView, userCompanyTxtView;
-
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
+
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -159,7 +160,6 @@ public class navigation extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
         if (id == R.id.Home) {
 
             title="Home";
@@ -193,7 +193,8 @@ public class navigation extends AppCompatActivity
 
             title="Find Us";
 
-            fragment = new FindUs();
+
+            fragment=new FindUs();
 
         }else if (id == R.id.ContactUs) {
 
