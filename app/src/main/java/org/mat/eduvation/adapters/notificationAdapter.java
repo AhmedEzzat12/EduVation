@@ -22,23 +22,19 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
     private List<NotificationModel> notificationslist = new ArrayList<>();
     private Context context;
 
-    public notificationAdapter(Context context) {
+    public notificationAdapter(List<NotificationModel> notificationsList,Context context) {
         this.context = context;
 
+        this.notificationslist=notificationsList;
     }
 
-    public void setData(List<NotificationModel> notificationsList) {
-        this.notificationslist.clear();
-        this.notificationslist.addAll(notificationsList);
-        notifyDataSetChanged();
-    }
 
     @Override
-    public notificationAdapter.myholder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public myholder onCreateViewHolder(ViewGroup parent, int viewType) {
 
 
         View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_row, parent, false);
-        notificationAdapter.myholder holder = new notificationAdapter.myholder(row);
+        myholder holder = new myholder(row);
 
         return holder;
     }
