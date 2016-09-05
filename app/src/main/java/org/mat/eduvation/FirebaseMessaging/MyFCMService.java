@@ -8,7 +8,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -23,22 +22,21 @@ import org.mat.eduvation.navigation_items.Announcements;
 
 public class MyFCMService extends FirebaseMessagingService {
     DatabaseConnector databaseConnector;
-    private FirebaseDatabase database;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        database = FirebaseDatabase.getInstance();
-        databaseConnector = new DatabaseConnector(MyFCMService.this);
-        databaseConnector.open();
-        sendNotification(remoteMessage.getNotification().getBody());
+        databaseConnector = new DatabaseConnector(getApplicationContext());
 
+        databaseConnector.open();
+        databaseConnector.insertNotification(remoteMessage.getNotification().getBody(), Utility.getDate());
+        databaseConnector.close();
+
+        sendNotification(remoteMessage.getData().get());
     }
 
     private void sendNotification(String messageBody) {
 
-        databaseConnector.insertNotification(messageBody, Utility.getDate());
-        databaseConnector.close();
 
         Intent intent = new Intent(this, Announcements.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
