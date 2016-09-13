@@ -49,7 +49,7 @@ public class Logout extends Fragment {
         SharedPreferences.Editor editor = SaveSharedPreference.getSharedPreferences(ctx).edit();
         editor.clear(); //clear all stored data
         editor.commit();
-        Toast.makeText(getContext(),"member deleted", Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
     }
 
     @Override

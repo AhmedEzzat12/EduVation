@@ -1,6 +1,9 @@
 package org.mat.eduvation;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -70,14 +73,21 @@ public class Signinfrag extends Fragment {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if (isNetworkAvailable())
                 signIn();
+                else
+                    Toast.makeText(getActivity(), "Please connect to internet", Toast.LENGTH_LONG).show();
+
             }
         });
         forgotpass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(),Forgotpassword.class));
+                if (isNetworkAvailable())
+                    startActivity(new Intent(getContext(), Forgotpassword.class));
+                else
+                    Toast.makeText(getActivity(), "Please connect to internet", Toast.LENGTH_LONG).show();
+
             }
         });
         return view;
@@ -147,4 +157,12 @@ public class Signinfrag extends Fragment {
         });
 
     }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+    }
+
 }

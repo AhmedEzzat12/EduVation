@@ -50,7 +50,7 @@ import static org.mat.eduvation.Signupfrag.keyGenerator;
 public class Profile extends AppCompatActivity {
     private static final int REQUEST_CODE_PICKER = 1;
     public final int READ_FROM_DATABASE_ID = 42;
-    public final int SAVE_FROM_DATABASE_ID = 43;
+    public final int SAVE_TO_DATABASE_ID = 43;
     private CircleImageView profilePhoto;
     private TextView name, company, email;
     private DatabaseConnector databaseConnector;
@@ -87,18 +87,18 @@ public class Profile extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         databaseConnector = new DatabaseConnector(this);
+
         database = FirebaseDatabase.getInstance();
+
+        images = database.getReference("images");
+
 
         name = (TextView) findViewById(R.id.username);
         company = (TextView) findViewById(R.id.CompanyProfile);
         email = (TextView) findViewById(R.id.EmailProfile);
 
-        database = FirebaseDatabase.getInstance();
-        images = database.getReference("images");
-
-
         profilePhoto = (CircleImageView) findViewById(R.id.profile_image_edit);
-        Toast.makeText(this, "onCreate", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Loading...", Toast.LENGTH_LONG).show();
 
 
         getUser();
@@ -106,29 +106,91 @@ public class Profile extends AppCompatActivity {
         profilePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                //startActivityForResult(pickPhoto, SELECTED_PICTURE);//one can be replaced with any action code
-                ImagePicker.create(Profile.this)
-                        .folderMode(true) // folder mode (false by default)
-                        .folderTitle("Folder") // folder selection title
-                        .imageTitle("Tap to select") // image selection title
-                        .single() // single mode
-                        .showCamera(true) // show camera or not (true by default)
-                        .imageDirectory("Camera") // directory name for captured image  ("Camera" folder by default)
-                        .start(REQUEST_CODE_PICKER); // start image picker activity with request code
+                if (isNetworkAvailable()) {
+                    //Intent pickPhoto = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    //startActivityForResult(pickPhoto, SELECTED_PICTURE);//one can be replaced with any action code
+                    ImagePicker.create(Profile.this)
+                            .folderMode(true) // folder mode (false by default)
+                            .folderTitle("Folder") // folder selection title
+                            .imageTitle("Tap to select") // image selection title
+                            .single() // single mode
+                            .showCamera(true) // show camera or not (true by default)
+                            .imageDirectory("Camera") // directory name for captured image  ("Camera" folder by default)
+                            .start(REQUEST_CODE_PICKER); // start image picker activity with request code
+                } else {
+                    Toast.makeText(getApplicationContext(), "Please connect to the internet and try again ", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
-        if (isNetworkAvailable()) {
+        if (isNetworkAvailable())
+
             getImageFromFB_DB();
 
-        } else
+        else
             loadDataFromDatabase();
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null) {
+            ArrayList<Image> images = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
+
+            Bitmap myBitmap = BitmapFactory.decodeFile(images.get(0).getPath());
+            String myBase64Image = encodeToBase64(myBitmap, Bitmap.CompressFormat.PNG, 100);
+            saveToFireBase(myBase64Image);
+
+            Picasso.with(this).load(new File(images.get(0).getPath())).placeholder(R.mipmap.ic_launcher).into(profilePhoto);
+
+
+        }
+    }
+
+    private void saveToDatabase(final String imageString) {
+        try {
+            Loader<Void> loader = getSupportLoaderManager()
+                    .initLoader(
+                            SAVE_TO_DATABASE_ID,
+                            null,
+                            new LoaderManager.LoaderCallbacks<Void>() {
+                                @Override
+                                public Loader<Void> onCreateLoader(int id, Bundle args) {
+                                    return new WriteDataLoader(Profile.this, imageString
+                                    );
+                                }
+
+                                @Override
+                                public void onLoadFinished(Loader<Void> loader, Void data) {
+                                    Toast.makeText(getApplicationContext(), "saved successfully", Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onLoaderReset(Loader<Void> loader) {
+                                    // do nothing
+                                }
+
+                            });
+            loader.forceLoad();
+
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void saveToFireBase(String imageFile) {
+
+        Map<String, String> imageMap = new HashMap<>();
+        imageMap.put("imageStr", imageFile);
+
+        images.child(FirebaseChildkey).setValue(imageMap);
+        Toast.makeText(getApplicationContext(), "Saving", Toast.LENGTH_LONG).show();
+        saveToDatabase(imageFile);
+
+    }
+
     private void loadDataFromDatabase() {
+
         try {
             android.support.v4.content.Loader<String> loader =
                     getSupportLoaderManager()
@@ -141,15 +203,17 @@ public class Profile extends AppCompatActivity {
 
                                 @Override
                                 public void onLoadFinished(Loader<String> loader, String data) {
-                                    try {
-                                        Bitmap myBitmapAgain = decodeBase64(data);
-                                        Drawable d = new BitmapDrawable(getResources(), myBitmapAgain);
-                                        profilePhoto.setImageDrawable(d);
+                                    if (data != null) {
 
-                                    } catch (Exception e) {
-                                        Log.d("loadDatafromdb", e.getMessage());
+                                        try {
+                                            Bitmap myBitmapAgain = decodeBase64(data);
+                                            Drawable d = new BitmapDrawable(getResources(), myBitmapAgain);
+                                            profilePhoto.setImageDrawable(d);
+
+                                        } catch (Exception e) {
+                                            Log.d("loadDatafromdb", e.getMessage());
+                                        }
                                     }
-
                                 }
 
                                 @Override
@@ -165,51 +229,6 @@ public class Profile extends AppCompatActivity {
 
     }
 
-    private void saveToDatabase(final String imageString) {
-        try {
-            Loader<Void> loader = getSupportLoaderManager()
-                    .initLoader(
-                            SAVE_FROM_DATABASE_ID,
-                            null,
-                            new LoaderManager.LoaderCallbacks<Void>() {
-                                @Override
-                                public Loader<Void> onCreateLoader(int id, Bundle args) {
-                                    return new WriteDataLoader(Profile.this, imageString
-                                    );
-                                }
-
-                                @Override
-                                public void onLoadFinished(Loader<Void> loader, Void data) {
-                                }
-
-                                @Override
-                                public void onLoaderReset(Loader<Void> loader) {
-                                    // do nothing
-                                }
-                            });
-            loader.forceLoad();
-
-        } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null) {
-            ArrayList<Image> images = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
-
-            Bitmap myBitmap = BitmapFactory.decodeFile(images.get(0).getPath());
-            String myBase64Image = encodeToBase64(myBitmap, Bitmap.CompressFormat.JPEG, 100);
-            saveToFireBase(myBase64Image);
-
-
-            Picasso.with(this).load(new File(images.get(0).getPath())).placeholder(R.mipmap.ic_launcher).into(profilePhoto);
-
-
-        }
-    }
-
     private void getImageFromFB_DB() {
         databaseConnector.open();
         if (databaseConnector.isImageExist(SaveSharedPreference.getUserName(getApplicationContext()).toLowerCase())) {
@@ -221,11 +240,15 @@ public class Profile extends AppCompatActivity {
                     try {
 
                         Map<String, String> imageMap = (Map) dataSnapshot.child(String.valueOf(FirebaseChildkey)).getValue();
-                        Bitmap myBitmapAgain = decodeBase64(imageMap.get("imageStr"));
-                        Log.d("getDataFB", imageMap.get("imageStr"));
-                        Drawable d = new BitmapDrawable(getResources(), myBitmapAgain);
-                        profilePhoto.setImageDrawable(d);
-                        saveToDatabase(imageMap.get("imageStr"));
+                        if (imageMap != null) {
+                            Bitmap myBitmapAgain = decodeBase64(imageMap.get("imageStr"));
+                            //Log.d("getDataFB", imageMap.get("imageStr"));
+                            Drawable d = new BitmapDrawable(getResources(), myBitmapAgain);
+                            profilePhoto.setImageDrawable(d);
+                            saveToDatabase(imageMap.get("imageStr"));
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Please set a profile picture", Toast.LENGTH_LONG).show();
+                        }
 
                     } catch (Exception e) {
                         Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
@@ -234,21 +257,11 @@ public class Profile extends AppCompatActivity {
 
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
-
+                    Toast.makeText(getApplicationContext(), "Please wait while loading your profile picture ", Toast.LENGTH_LONG).show();
+                    Log.e("onCancelled image", databaseError.getMessage());
                 }
             });
         }
-    }
-
-    private void saveToFireBase(String imageFile) {
-
-        Map<String, String> imageMap = new HashMap<>();
-        imageMap.put("imageStr", imageFile);
-
-        images.child(FirebaseChildkey).setValue(imageMap);
-
-        saveToDatabase(imageFile);
-
     }
 
     private void getUser() {
@@ -273,6 +286,32 @@ public class Profile extends AppCompatActivity {
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+    }
+
+    static class WriteDataLoader extends AsyncTaskLoader<Void> {
+
+        public DatabaseConnector databaseConnector;
+        private String imageStr;
+
+        public WriteDataLoader(Context context, String imageStr) {
+            super(context);
+            this.imageStr = imageStr;
+            databaseConnector = new DatabaseConnector(getContext());
+        }
+
+        @Override
+        public Void loadInBackground() {
+            // save to the local database
+            databaseConnector.open();
+            if (!databaseConnector.isImageExist(SaveSharedPreference.getUserName(getContext()).toLowerCase())) {
+                databaseConnector.insertImageString(imageStr,
+                        String.valueOf(SaveSharedPreference.getUserName(getContext()).toLowerCase()));
+            } else if (databaseConnector.isImageExist(SaveSharedPreference.getUserName(getContext()).toLowerCase())) {
+                databaseConnector.updateImage(SaveSharedPreference.getUserName(getContext()).toLowerCase(), imageStr);
+            }
+            databaseConnector.close();
+            return null;
+        }
     }
 
     static class ReadDataLoader extends AsyncTaskLoader<String> {
@@ -304,31 +343,5 @@ public class Profile extends AppCompatActivity {
         }
     }
 
-    static class WriteDataLoader extends AsyncTaskLoader<Void> {
-
-        public DatabaseConnector databaseConnector;
-        private String imageStr;
-
-        public WriteDataLoader(Context context, String imageStr) {
-            super(context);
-            this.imageStr = imageStr;
-            databaseConnector = new DatabaseConnector(getContext());
-            databaseConnector.open();
-        }
-
-        @Override
-        public Void loadInBackground() {
-            // save to the local database
-
-            if (!databaseConnector.isImageExist(SaveSharedPreference.getUserName(getContext()).toLowerCase())) {
-                databaseConnector.insertImageString(imageStr,
-                        String.valueOf(SaveSharedPreference.getUserName(getContext()).toLowerCase()));
-            } else if (databaseConnector.isImageExist(SaveSharedPreference.getUserName(getContext()).toLowerCase())) {
-                databaseConnector.updateImage(SaveSharedPreference.getUserName(getContext()).toLowerCase(), imageStr);
-            }
-            databaseConnector.close();
-            return null;
-        }
-    }
 
 }

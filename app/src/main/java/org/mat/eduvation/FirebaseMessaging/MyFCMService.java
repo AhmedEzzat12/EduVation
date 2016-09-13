@@ -11,9 +11,7 @@ import android.support.v4.app.NotificationCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import org.mat.eduvation.LocaL_Database.DatabaseConnector;
 import org.mat.eduvation.R;
-import org.mat.eduvation.Utility;
 import org.mat.eduvation.navigation_items.Announcements;
 
 /**
@@ -21,18 +19,11 @@ import org.mat.eduvation.navigation_items.Announcements;
  */
 
 public class MyFCMService extends FirebaseMessagingService {
-    DatabaseConnector databaseConnector;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        databaseConnector = new DatabaseConnector(getApplicationContext());
-
-        databaseConnector.open();
-        databaseConnector.insertNotification(remoteMessage.getNotification().getBody(), Utility.getDate());
-        databaseConnector.close();
-
-        sendNotification(remoteMessage.getData().get());
+        sendNotification(remoteMessage.getNotification().getBody());
     }
 
     private void sendNotification(String messageBody) {
@@ -54,7 +45,6 @@ public class MyFCMService extends FirebaseMessagingService {
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
 

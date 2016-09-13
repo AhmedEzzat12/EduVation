@@ -1,6 +1,9 @@
 package org.mat.eduvation;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -75,7 +78,11 @@ public class Signupfrag extends Fragment {
             public void onClick(View view) {
                 if(passwoard.getText().toString().equals(confirmpass.getText().toString()))
                 {
+                    if (isNetworkAvailable())
                     signUp();
+                    else
+                        Toast.makeText(getActivity(), "Please connect to internet", Toast.LENGTH_LONG).show();
+
                 }
                 else {
                     Toast.makeText(getActivity(), "password doesn't match", Toast.LENGTH_SHORT).show();
@@ -141,6 +148,15 @@ public class Signupfrag extends Fragment {
             }
         });
     }
+
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+    }
+
 
     private void writeNewUser(String name, String email, String company, String birthday) {
         userModel = new UserModel(name, company, birthday, email.toLowerCase());
