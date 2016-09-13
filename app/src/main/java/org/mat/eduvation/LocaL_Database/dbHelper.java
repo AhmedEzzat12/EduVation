@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 
 public class dbHelper extends SQLiteOpenHelper {
+
     //users table
     public static final String TABLE1_NAME = "USER";
     public static final String COLUMN_ID = "_ID";
@@ -16,13 +17,11 @@ public class dbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_FBKEY = "FIREBASEKEY";
 
 
-    //notification table
-    public static final String TABLE2_NAME = "NOTIFICATION";
+    //Image table
+    public static final String TABLE2_NAME = "IMAGE";
     public static final String COLUMN2_ID = "_ID";
-    public static final String COLUMN_MESSAGE = "MESSAGE";
-    public static final String COLUMN_DATE = "DATEANDTIME";
-
-
+    public static final String COLUMN_IMAGE_STRING = "IMAGEKEY";
+    public static final String COLUMN_USEREMAIL = "USER";
 
 
 
@@ -39,12 +38,14 @@ public class dbHelper extends SQLiteOpenHelper {
                     COLUMN_EMAIL + " TEXT, " +
                     COLUMN_BIRTHDATE + " TEXT);";
 
-
     private static final String TABLE2_CREATE =
             "CREATE TABLE " + TABLE2_NAME + "(" +
                     COLUMN2_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    COLUMN_MESSAGE + " TEXT, " +
-                    COLUMN_DATE + " TEXT);";
+                    COLUMN_USEREMAIL + " TEXT, " +
+                    COLUMN_IMAGE_STRING + " TEXT);";
+
+
+
     public dbHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }

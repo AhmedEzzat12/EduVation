@@ -22,10 +22,10 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
     private List<NotificationModel> notificationslist = new ArrayList<>();
     private Context context;
 
-    public notificationAdapter(List<NotificationModel> notificationsList,Context context) {
+    public notificationAdapter(List<NotificationModel> notificationsList, Context context) {
         this.context = context;
 
-        this.notificationslist=notificationsList;
+        this.notificationslist = notificationsList;
     }
 
 
@@ -58,8 +58,8 @@ public class notificationAdapter extends RecyclerView.Adapter<notificationAdapte
 
         public myholder(View itemView) {
             super(itemView);
-            message = (TextView) itemView.findViewById(R.id.notificationMessage);
-            date = (TextView) itemView.findViewById(R.id.notificationDate);
+            message = (TextView) itemView.findViewById(R.id.sessionName);
+            date = (TextView) itemView.findViewById(R.id.sessionTime);
         }
     }
 }

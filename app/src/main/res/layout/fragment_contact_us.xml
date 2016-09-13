@@ -2,51 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     tools:context="org.mat.eduvation.navigation_items.ContactUs">
-
-    <EditText
-        android:id="@+id/ContactUs_firstName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:hint="First name"
-        android:lines="1" />
-
-    <EditText
-        android:id="@+id/ContactUs_lastName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/ContactUs_firstName"
-        android:layout_toRightOf="@id/ContactUs_firstName"
-        android:gravity="end"
-        android:hint="Last name"
-        android:lines="1" />
-
-
-    <EditText
-        android:id="@+id/ContactUs_Email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ContactUs_firstName"
-        android:layout_marginTop="10dp"
-        android:hint="Email"
-        android:lines="1" />
-
-    <EditText
-        android:id="@+id/ContactUs_MessageBody"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ContactUs_Email"
-        android:layout_marginTop="10dp"
-        android:hint="Message"
-        android:lines="1"
-        android:maxLines="5" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="Send" />
 
 </RelativeLayout>

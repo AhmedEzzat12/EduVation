@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.0"
+    buildToolsVersion '24.0.2'
 
     defaultConfig {
         applicationId "org.mat.eduvation"
@@ -18,24 +18,34 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-        dexOptions {
-                javaMaxHeapSize "4g"
-           }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    allprojects {
+        repositories {
+            maven { url "https://jitpack.io" }
+        }
+    }
+
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
     // Google Sign In SDK (only required for Google Sign In)
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:design:24.0.0'
-    compile 'com.google.firebase:firebase-auth:9.2.0'
-    compile 'com.android.support:support-v4:24.0.0'
+    compile 'com.android.support:appcompat-v7:24.2.0'
+    compile 'com.android.support:design:24.2.0'
+    compile 'com.google.firebase:firebase-auth:9.2.1'
+    compile 'com.android.support:support-v4:24.2.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile 'com.google.firebase:firebase-database:9.2.0'
-    compile 'com.google.firebase:firebase-messaging:9.2.0'
+    compile 'com.github.nguyenhoanglam:ImagePicker:1.1.1'
+    compile 'com.google.firebase:firebase-database:9.2.1'
+    compile 'com.google.firebase:firebase-messaging:9.2.1'
+    compile 'com.google.android.gms:play-services:9.2.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha4'
     compile 'com.firebase:firebase-client-android:2.5.2+'
-    compile 'com.google.android.gms:play-services:9.2.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
+    testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

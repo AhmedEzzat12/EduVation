@@ -2,6 +2,7 @@ package org.mat.eduvation;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -17,10 +18,18 @@ public class Forgotpassword extends AppCompatActivity {
     private EditText inputEmail;
     private Button btnReset;
     private FirebaseAuth auth;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgotpassword);
+
+        toolbar = (Toolbar) findViewById(R.id.toolbareduid);
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setTitle("Forgot Password");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         inputEmail= (EditText) findViewById(R.id.forgotpaswordemailid);
         btnReset=(Button)findViewById(R.id.forgotpaswordbtnid);

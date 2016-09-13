@@ -24,10 +24,10 @@ import org.mat.eduvation.UserModel;
 import org.mat.eduvation.adapters.attendanceadapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -65,7 +65,13 @@ public class Attendance extends Fragment {
      //   Toast.makeText(getContext(),"success",Toast.LENGTH_LONG).show();
         HashMap<String, UserModel> data = dataSnapshot.getValue(new GenericTypeIndicator<HashMap<String, UserModel>>() {
         });
+
         UserModellist = new ArrayList<>(data.values());
+        Collections.sort(UserModellist, new Comparator<UserModel>() {
+            public int compare(UserModel u1, UserModel u2) {
+                return u1.getName().compareTo(u2.getName());
+            }
+        });
 
         adapter = new attendanceadapter(UserModellist, getContext());
         RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.rectcleattendance);
@@ -84,5 +90,6 @@ public class Attendance extends Fragment {
         });
         return root;
     }
+
 
 }

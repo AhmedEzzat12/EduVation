@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,12 @@ public class Logout extends Fragment {
 
         check = true;
         FirebaseAuth.getInstance().signOut();
-        startActivity(new Intent(getContext(), Main.class));
+
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        fm.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+        startActivity(new Intent(getActivity(), Main.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+        getActivity().finish();
     }
 
     public  void clearUserName(Context ctx)
@@ -52,5 +58,6 @@ public class Logout extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_logout, container, false);
     }
+
 
 }

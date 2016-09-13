@@ -30,7 +30,6 @@ public class Signupfrag extends Fragment {
     private FirebaseDatabase database;
     private UserModel userModel;
     private DatabaseReference users;
-    private String[] fields;
     private DatabaseConnector databaseConnector;
 
     public static String keyGenerator(String[] s) {
@@ -125,7 +124,8 @@ public class Signupfrag extends Fragment {
 
                     SaveSharedPreference.setUserName(getContext(), email.getText().toString().toLowerCase());
 
-                    startActivity(new Intent(getContext(), navigation.class));
+                    startActivity(new Intent(getContext(), navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                    getActivity().finish();
                 }
                 else {
                     // if email already registerd
@@ -144,7 +144,7 @@ public class Signupfrag extends Fragment {
 
     private void writeNewUser(String name, String email, String company, String birthday) {
         userModel = new UserModel(name, company, birthday, email.toLowerCase());
-        fields = email.split("\\.");
+        String[] fields = email.split("\\.");
         UserModel.KEY = keyGenerator(fields);
         users.child(UserModel.KEY).setValue(userModel);
     }

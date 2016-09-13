@@ -10,6 +10,7 @@ public class UserModel {
     private String b_date;
     private String email;
 
+
     public UserModel(String name, String company, String b_date, String email) {
         this.name = name;
         this.company = company;
@@ -51,4 +52,6 @@ public class UserModel {
     public void setB_date(String b_date) {
         this.b_date = b_date;
     }
+
+
 }

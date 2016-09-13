@@ -27,6 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.mat.eduvation.LocaL_Database.DatabaseConnector;
 
+import static org.mat.eduvation.Signupfrag.keyGenerator;
+
 public class Signinfrag extends Fragment {
 
     private final String TAG_LOG = "SignInFragment";
@@ -114,11 +116,13 @@ public class Signinfrag extends Fragment {
                         } else {
                             SaveSharedPreference.setUserName(getContext(), emailtext.toLowerCase());
 
-                            if (!databaseConnector.isExist(emailtext.toLowerCase())) {
+                            if (!databaseConnector.isEmailExist(emailtext.toLowerCase())) {
                                 saveCurrentDataToFB_DB(emailtext.toLowerCase());
                             }
 
-                            startActivity(new Intent(getContext(), navigation.class));
+                            startActivity(new Intent(getActivity(), navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                            getActivity().finish();
+
                         }
                     }
                 });
@@ -126,7 +130,7 @@ public class Signinfrag extends Fragment {
 
     public void saveCurrentDataToFB_DB(String email) {
         fields = email.split("\\.");
-        final String key = Signupfrag.keyGenerator(fields);
+        final String key = keyGenerator(fields);
         users = database.getReference("users");
         users.addValueEventListener(new ValueEventListener() {
             @Override

@@ -1,5 +1,6 @@
 package org.mat.eduvation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
@@ -13,8 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
-import com.google.android.gms.maps.GoogleMap;
 
 import org.mat.eduvation.navigation_items.Announcements;
 import org.mat.eduvation.navigation_items.Attendance;
@@ -37,7 +36,6 @@ public class navigation extends AppCompatActivity
     private String title="";
     private CircleImageView circleImageView;
     private TextView userNameTxtView, userCompanyTxtView;
-    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +43,7 @@ public class navigation extends AppCompatActivity
         setContentView(R.layout.activity_navigation);
 
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbarNav);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setTitle("Home");
@@ -76,11 +74,7 @@ public class navigation extends AppCompatActivity
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Profile profile = new Profile();
-                android.support.v4.app.FragmentTransaction fragmentTransaction =
-                        getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, profile);
-                fragmentTransaction.commit();
+                startActivity(new Intent(navigation.this, Profile.class));
             }
         });
 
@@ -89,25 +83,17 @@ public class navigation extends AppCompatActivity
         userNameTxtView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Profile profile = new Profile();
-                android.support.v4.app.FragmentTransaction fragmentTransaction =
-                        getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, profile);
-                fragmentTransaction.commit();
+                startActivity(new Intent(navigation.this, Profile.class));
             }
         });
 
 
-        userCompanyTxtView = (TextView) hView.findViewById(R.id.userHeaderName);
+        userCompanyTxtView = (TextView) hView.findViewById(R.id.userHeaderCompany);
 
         userCompanyTxtView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Profile profile = new Profile();
-                android.support.v4.app.FragmentTransaction fragmentTransaction =
-                        getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, profile);
-                fragmentTransaction.commit();
+                startActivity(new Intent(navigation.this, Profile.class));
             }
         });
 

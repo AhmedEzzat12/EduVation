@@ -3,7 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingEnd="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingStart="20dp"
+    android:paddingTop="20dp">
 
     <ImageView
 
@@ -14,7 +19,7 @@
         android:src="@drawable/schedule1" />
 
     <TextView
-        android:id="@+id/notificationMessage"
+        android:id="@+id/sessionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -27,10 +32,10 @@
         tools:text="Notification Notification Notification" />
 
     <TextView
-        android:id="@+id/notificationDate"
+        android:id="@+id/sessionTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/notificationMessage"
+        android:layout_below="@+id/sessionName"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"

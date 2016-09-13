@@ -6,7 +6,7 @@
     tools:context="org.mat.eduvation.navigation_items.Schedule">
 
     <include android:id="@+id/app_bar"
-        layout="@layout/toolbar"></include>
+        layout="@layout/toolbaredu"></include>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layoutsch"

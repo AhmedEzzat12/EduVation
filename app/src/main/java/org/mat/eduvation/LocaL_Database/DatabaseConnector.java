@@ -77,7 +77,7 @@ public class DatabaseConnector {
 
     }
 
-    public boolean isExist(String email) {
+    public boolean isEmailExist(String email) {
         String[] columns = {dbHelper.COLUMN_NAME, dbHelper.COLUMN_COMPANY,
                 dbHelper.COLUMN_EMAIL, dbHelper.COLUMN_BIRTHDATE, dbHelper.COLUMN_FBKEY};
 
@@ -110,33 +110,70 @@ public class DatabaseConnector {
 
     }
 
-    // Notification Table methods
 
-    public void insertNotification(String Message, String Date) {
+    // Image Table methods
+
+    public void insertImageString(String image, String email) {
 
         ContentValues newItem = new ContentValues();
-        newItem.put(dbHelper.COLUMN_MESSAGE, Message);
-        newItem.put(dbHelper.COLUMN_DATE, Date);
+        newItem.put(dbHelper.COLUMN_IMAGE_STRING, image);
+        newItem.put(dbHelper.COLUMN_USEREMAIL, email);
 
         db.insert(dbHelper.TABLE2_NAME, null, newItem);
 
     }
 
+    public boolean isImageExist(String email) {
+        String[] columns = {dbHelper.COLUMN_USEREMAIL,
+                dbHelper.COLUMN_IMAGE_STRING};
 
-    public Cursor getAllNotifications() {
-        String[] col = {dbHelper.COLUMN2_ID, dbHelper.COLUMN_MESSAGE, dbHelper.COLUMN_DATE};
+
+        Cursor cursor = db.query(
+                dbHelper.TABLE2_NAME, // table name
+                columns, // column names
+                dbHelper.COLUMN_USEREMAIL + " = '" + email + "'", // where clause // id param. could be here or appended as it is ^
+                null, // where params
+                null, // groupby
+                null, // having
+                null // orderby
+        );
+
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
+
+    }
+
+    public Cursor getImageByEmail(String email) {
+        String[] columns = {dbHelper.COLUMN_IMAGE_STRING};
 
         return db.query(
-                dbHelper.TABLE2_NAME,
-                col,
-                null,
-                null,
-                null,
-                null,
-                null
+                dbHelper.TABLE2_NAME, // table name
+                columns, // column names
+                dbHelper.COLUMN_USEREMAIL + " = '" + email + "'", // where clause // id param. could be here or appended as it is ^
+                null, // where params
+                null, // groupby
+                null, // having
+                null // orderby
         );
     }
 
+    public void updateImage(String email, String imageStr) {
+        ContentValues editImage = new ContentValues();
+
+        editImage.put(dbHelper.COLUMN_IMAGE_STRING, imageStr);
+
+        db.update(
+                dbHelper.TABLE2_NAME, // table name
+                editImage, // values
+                dbHelper.COLUMN_USEREMAIL + " = '" + email + "'", // where clause
+                null // where params
+        );
+
+    }
 
 
 }
