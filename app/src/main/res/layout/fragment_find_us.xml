@@ -1,30 +1,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="?attr/actionBarSize"
     android:orientation="vertical">
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        android:elevation="2dp"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="0.5"
-        android:elevation="2dp"
-        android:background="#ffffff">
-        <android.support.v4.widget.NestedScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+        android:background="#ffffff"
+        android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -32,21 +24,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="EduVation Venu"
-                    android:gravity="start"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="24dp"
                     android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:gravity="start"
+                    android:text="EduVation Venu"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="24dp"
                     android:layout_marginLeft="24dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="16dp"
+                    android:gravity="start"
                     android:text="Phone : 01115991038"/>
 
                 <ImageView
@@ -58,16 +50,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="start"
-                    android:layout_marginStart="24dp"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginLeft="24dp"
-                    android:text="Address : الإسماعيلية - الشيخ زايد - المرحلة الخامسة"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginStart="24dp"
+                    android:gravity="start"
+                    android:text="Address : الإسماعيلية - الشيخ زايد - المرحلة الخامسة" />
 
             </LinearLayout>
-
-
-</android.support.v4.widget.NestedScrollView>
 
     </LinearLayout>
 

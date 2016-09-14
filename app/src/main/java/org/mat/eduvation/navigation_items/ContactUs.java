@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.mat.eduvation.R;
 
@@ -27,15 +28,16 @@ public class ContactUs extends Fragment {
 
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("message/rfc822");
-        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"ooooppppeeeerrrraaaa@gmail.com"});
-        i.putExtra(Intent.EXTRA_SUBJECT, "subject of email");
-        i.putExtra(Intent.EXTRA_TEXT, "body of email");
+        i.putExtra(Intent.EXTRA_EMAIL, new String[]{"ahmed.salama456@gmail.com"});
+        i.putExtra(Intent.EXTRA_SUBJECT, "EduVation Inquiry ");
+        i.putExtra(Intent.EXTRA_TEXT, "Enter whay uo want");
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
             startActivity(Intent.createChooser(i, "Send mail..."));
+
         } catch (android.content.ActivityNotFoundException ex) {
-            //Toast.makeText(, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "There are no email clients installed.", Toast.LENGTH_SHORT).show();
         }
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_contact_us, container, false);

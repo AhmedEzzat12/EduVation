@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
@@ -21,7 +20,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,12 +46,11 @@ import org.mat.eduvation.navigation_items.Speakers;
 import org.mat.eduvation.navigation_items.SponsorsAndPartners;
 import org.mat.eduvation.navigation_items.home;
 
-import java.util.Map;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static org.mat.eduvation.SaveSharedPreference.getUserName;
 import static org.mat.eduvation.Signupfrag.keyGenerator;
+import static org.mat.eduvation.navigation_items.Profile.decodeBase64;
 
 public class navigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -72,10 +69,6 @@ public class navigation extends AppCompatActivity
     private String userEmail;
     private String[] fields;
 
-    public static Bitmap decodeBase64(String input) {
-        byte[] decodedBytes = Base64.decode(input, 0);
-        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -320,13 +313,13 @@ public class navigation extends AppCompatActivity
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     try {
 
-                        Map<String, String> imageMap = (Map) dataSnapshot.child(String.valueOf(FirebaseChildkey)).getValue();
-                        if (imageMap != null) {
-                            Bitmap myBitmapAgain = decodeBase64(imageMap.get("imageStr"));
+                        ImageModel imageModel = dataSnapshot.child(String.valueOf(FirebaseChildkey)).getValue(ImageModel.class);
+                        if (imageModel != null) {
+                            Bitmap myBitmapAgain = decodeBase64(imageModel.getImagestr());
                             //Log.d("getDataFB", imageMap.get("imageStr"));
                             Drawable d = new BitmapDrawable(getResources(), myBitmapAgain);
                             circleImageView.setImageDrawable(d);
-                            saveToDatabase(imageMap.get("imageStr"));
+                            saveToDatabase(imageModel.getImagestr());
                         } else {
                             //do nothing
                         }

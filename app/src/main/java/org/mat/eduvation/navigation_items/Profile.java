@@ -31,6 +31,7 @@ import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
 import com.nguyenhoanglam.imagepicker.model.Image;
 import com.squareup.picasso.Picasso;
 
+import org.mat.eduvation.ImageModel;
 import org.mat.eduvation.LocaL_Database.DatabaseConnector;
 import org.mat.eduvation.LocaL_Database.dbHelper;
 import org.mat.eduvation.R;
@@ -39,8 +40,6 @@ import org.mat.eduvation.SaveSharedPreference;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -180,10 +179,11 @@ public class Profile extends AppCompatActivity {
 
     private void saveToFireBase(String imageFile) {
 
-        Map<String, String> imageMap = new HashMap<>();
-        imageMap.put("imageStr", imageFile);
+        // Map<String, String> imageMap = new HashMap<>();
+        ImageModel imageModel = new ImageModel(imageFile, getUserName(Profile.this));
+        //imageMap.put("imageStr", imageFile);
 
-        images.child(FirebaseChildkey).setValue(imageMap);
+        images.child(FirebaseChildkey).setValue(imageModel);
         Toast.makeText(getApplicationContext(), "Saving", Toast.LENGTH_LONG).show();
         saveToDatabase(imageFile);
 
@@ -204,7 +204,6 @@ public class Profile extends AppCompatActivity {
                                 @Override
                                 public void onLoadFinished(Loader<String> loader, String data) {
                                     if (data != null) {
-
                                         try {
                                             Bitmap myBitmapAgain = decodeBase64(data);
                                             Drawable d = new BitmapDrawable(getResources(), myBitmapAgain);
@@ -238,14 +237,14 @@ public class Profile extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     try {
-
-                        Map<String, String> imageMap = (Map) dataSnapshot.child(String.valueOf(FirebaseChildkey)).getValue();
-                        if (imageMap != null) {
-                            Bitmap myBitmapAgain = decodeBase64(imageMap.get("imageStr"));
+                        ImageModel imageModel = dataSnapshot.child(String.valueOf(FirebaseChildkey)).getValue(ImageModel.class);
+                        //  Map<String, String> imageMap = (Map) dataSnapshot.child(String.valueOf(FirebaseChildkey)).getValue();
+                        if (imageModel != null) {
+                            Bitmap myBitmapAgain = decodeBase64(imageModel.getImagestr());
                             //Log.d("getDataFB", imageMap.get("imageStr"));
                             Drawable d = new BitmapDrawable(getResources(), myBitmapAgain);
                             profilePhoto.setImageDrawable(d);
-                            saveToDatabase(imageMap.get("imageStr"));
+                            saveToDatabase(imageModel.getImagestr());
                         } else {
                             Toast.makeText(getApplicationContext(), "Please set a profile picture", Toast.LENGTH_LONG).show();
                         }

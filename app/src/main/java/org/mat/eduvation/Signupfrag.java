@@ -127,7 +127,7 @@ public class Signupfrag extends Fragment {
                             company.getText().toString(), String.valueOf(birthday.getText()));
 
                     databaseConnector.insertUser(name.getText().toString(), company.getText().toString(), String.valueOf(birthday.getText())
-                            , email.getText().toString(), UserModel.KEY);
+                            , email.getText().toString().toLowerCase(), UserModel.KEY);
 
                     SaveSharedPreference.setUserName(getContext(), email.getText().toString().toLowerCase());
 

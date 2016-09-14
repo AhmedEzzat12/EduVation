@@ -30,7 +30,7 @@ public class Schedule extends Fragment {
 
         TabLayout tabLayout = (TabLayout) root.findViewById(R.id.tab_layoutsch);
         tabLayout.addTab(tabLayout.newTab().setText("Day 1"));
-        tabLayout.addTab(tabLayout.newTab().setText("Day 2"));
+        //  tabLayout.addTab(tabLayout.newTab().setText("Day 2"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) root.findViewById(R.id.pagersch);

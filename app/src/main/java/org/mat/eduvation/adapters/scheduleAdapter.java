@@ -5,7 +5,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import org.mat.eduvation.ScheduleFragment.Day1;
-import org.mat.eduvation.ScheduleFragment.Day2;
 
 /**
  * Created by ahmed on 7/18/2016.
@@ -25,9 +24,9 @@ public class scheduleAdapter extends FragmentStatePagerAdapter {
             case 0:
 
                 return new Day1();
-            case 1:
+            //  case 1:
 
-                return new Day2();
+            //  return new Day2();
             default:
                 return null;
         }

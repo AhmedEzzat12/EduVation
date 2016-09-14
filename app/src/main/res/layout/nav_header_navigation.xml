@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="180dp"
     android:background="@color/colorPrimary"
@@ -9,8 +10,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark"
-    >
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
@@ -20,22 +20,26 @@
         android:layout_marginStart="6dp"
         android:layout_marginTop="5dp"
         android:clickable="true"
-        android:src="@drawable/profilepic" />
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/userHeaderName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
         android:clickable="true"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="Ahmed Ezzat"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="Ahmed Ezzat" />
 
     <TextView
         android:id="@+id/userHeaderCompany"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
         android:clickable="true"
-        android:text="android.studio@android.com" />
+        tools:text="android.studio@android.com" />
 
 </LinearLayout>
