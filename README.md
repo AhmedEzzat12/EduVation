@@ -14,8 +14,8 @@ EduVation " Education&Innovation " is:
 
 - Targeting all people interested in Educational and Technological fields and seeking for its development.
 
-## **Mission
-** ##To create an environment where passionate people for education can come together to learn, network, bridge the gap between trades, expose potential and see actual results.
+## **Mission**##
+To create an environment where passionate people for education can come together to learn, network, bridge the gap between trades, expose potential and see actual results.
 
 
 ### Link on Google play ###
