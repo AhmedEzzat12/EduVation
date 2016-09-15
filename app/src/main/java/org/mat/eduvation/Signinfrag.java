@@ -147,7 +147,7 @@ public class Signinfrag extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserModel userModel = dataSnapshot.child(String.valueOf(key)).getValue(UserModel.class);
                 Log.d(TAG_LOG, userModel.getEmail());
-                databaseConnector.insertUser(userModel.getName(), userModel.getCompany(), String.valueOf(userModel.getB_date()), userModel.getEmail(), key);
+                databaseConnector.insertUser(userModel.getName(), userModel.getCompany(), String.valueOf(userModel.getB_date()), userModel.getEmail().toLowerCase(), key);
             }
 
             @Override

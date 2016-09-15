@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +56,9 @@ public class attendanceAdapter extends RecyclerView.Adapter<attendanceAdapter.my
             holder.name.setText(nameRow);
 
         } catch (Exception e) {
-            Log.e("attendance adapter", e.getMessage());
+
+            //Log.e("attendance adapter", e.getMessage());
+
             holder.name.setText(nameRow);
         }
 

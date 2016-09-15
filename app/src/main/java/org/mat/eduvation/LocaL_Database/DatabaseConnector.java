@@ -101,6 +101,7 @@ public class DatabaseConnector {
 
     }
 
+
     public boolean deleteAllUsers() {
 
         int doneDelete = 0;
@@ -175,6 +176,28 @@ public class DatabaseConnector {
 
     }
 
+    public boolean isEmailImageExist(String email) {
+        String[] columns = {dbHelper.COLUMN_USEREMAIL, dbHelper.COLUMN_IMAGE_STRING};
+
+
+        Cursor cursor = db.query(
+                dbHelper.TABLE2_NAME, // table name
+                columns, // column names
+                dbHelper.COLUMN_USEREMAIL + " = '" + email + "'", // where clause // id param. could be here or appended as it is ^
+                null, // where params
+                null, // groupby
+                null, // having
+                null // orderby
+        );
+
+        if (cursor.getCount() <= 0) {
+            cursor.close();
+            return false;
+        }
+        cursor.close();
+        return true;
+
+    }
 
 }
 

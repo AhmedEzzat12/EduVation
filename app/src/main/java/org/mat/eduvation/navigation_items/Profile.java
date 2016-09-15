@@ -137,6 +137,7 @@ public class Profile extends AppCompatActivity {
             ArrayList<Image> images = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
 
             Bitmap myBitmap = BitmapFactory.decodeFile(images.get(0).getPath());
+
             String myBase64Image = encodeToBase64(myBitmap, Bitmap.CompressFormat.PNG, 100);
             saveToFireBase(myBase64Image);
 
@@ -155,6 +156,8 @@ public class Profile extends AppCompatActivity {
                             new LoaderManager.LoaderCallbacks<Void>() {
                                 @Override
                                 public Loader<Void> onCreateLoader(int id, Bundle args) {
+                                    Toast.makeText(getApplicationContext(), "still saving please wait...", Toast.LENGTH_SHORT).show();
+
                                     return new WriteDataLoader(Profile.this, imageString
                                     );
                                 }
@@ -231,6 +234,7 @@ public class Profile extends AppCompatActivity {
     private void getImageFromFB_DB() {
         databaseConnector.open();
         if (databaseConnector.isImageExist(SaveSharedPreference.getUserName(getApplicationContext()).toLowerCase())) {
+            databaseConnector.close();
             loadDataFromDatabase();
         } else {
             images.addValueEventListener(new ValueEventListener() {
@@ -326,21 +330,27 @@ public class Profile extends AppCompatActivity {
         public String loadInBackground() {
 
             databaseConnector.open();
-            if (databaseConnector.isEmailExist(SaveSharedPreference.getUserName(getContext()).toLowerCase())) {
+            try {
+                if (databaseConnector.isImageExist(SaveSharedPreference.getUserName(getContext()).toLowerCase())) {
 
-                Cursor cursor = databaseConnector.getImageByEmail(SaveSharedPreference.getUserName(getContext()).toLowerCase());
+                    Cursor cursor = databaseConnector.getImageByEmail(SaveSharedPreference.getUserName(getContext()).toLowerCase());
 
-                // parse data from the cursor
-                if (cursor.moveToFirst())
-                    do {
-                        imageString = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_IMAGE_STRING));
-                    } while (cursor.moveToNext());
+                    // parse data from the cursor
+                    if (cursor.moveToFirst())
+                        do {
+                            imageString = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_IMAGE_STRING));
+                        } while (cursor.moveToNext());
+                    databaseConnector.close();
+                    return imageString;
+                }
+            } catch (Exception e) {
+                Log.e("databaseprofile", e.getMessage());
                 databaseConnector.close();
-                return imageString;
-            } else
                 return null;
+            }
+            databaseConnector.close();
+            return null;
         }
+
     }
-
-
 }

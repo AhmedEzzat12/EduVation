@@ -1,6 +1,9 @@
 package org.mat.eduvation.navigation_items;
 
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -61,6 +64,7 @@ public class Announcements extends Fragment {
 
         // Get a reference to our posts
         Firebase ref = new Firebase("https://eduvation-7aff9.firebaseio.com/Notifications");
+        if (isNetworkAvailable()) {
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -95,7 +99,18 @@ public class Announcements extends Fragment {
             }
 
         });
+        } else {
+            Toast.makeText(getContext(), "Please connect to internet to get data ", Toast.LENGTH_LONG).show();
+
+        }
         return root;
+    }
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
 }

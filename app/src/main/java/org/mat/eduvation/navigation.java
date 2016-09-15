@@ -76,6 +76,7 @@ public class navigation extends AppCompatActivity
         setContentView(R.layout.activity_navigation);
 
 
+
         toolbar = (Toolbar) findViewById(R.id.toolbarNav);
         setSupportActionBar(toolbar);
 
@@ -104,9 +105,19 @@ public class navigation extends AppCompatActivity
 
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_36dp);
 
+        databaseConnector = new DatabaseConnector(this);
+
+        database = FirebaseDatabase.getInstance();
+
+        images = database.getReference("images");
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View hView = navigationView.getHeaderView(0);
+
         circleImageView = (CircleImageView) hView.findViewById(R.id.profile_image);
+        userNameTxtView = (TextView) hView.findViewById(R.id.userHeaderName);
+        userCompanyTxtView = (TextView) hView.findViewById(R.id.userHeaderCompany);
+
+        getUser();
 
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +126,6 @@ public class navigation extends AppCompatActivity
             }
         });
 
-        userNameTxtView = (TextView) hView.findViewById(R.id.userHeaderName);
 
         userNameTxtView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,7 +135,6 @@ public class navigation extends AppCompatActivity
         });
 
 
-        userCompanyTxtView = (TextView) hView.findViewById(R.id.userHeaderCompany);
 
         userCompanyTxtView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,13 +146,7 @@ public class navigation extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        databaseConnector = new DatabaseConnector(this);
 
-        database = FirebaseDatabase.getInstance();
-
-        images = database.getReference("images");
-
-        getUser();
 
         if (isNetworkAvailable())
 
@@ -178,9 +181,25 @@ public class navigation extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_Profile) {
+
+            startActivity(new Intent(navigation.this, Profile.class));
             return true;
         }
+
+        if (id == R.id.action_Logout) {
+            title = "Logout";
+            fragment = new Logout();
+            android.support.v4.app.FragmentTransaction fragmentTransaction =
+                    getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment);
+            fragmentTransaction.commit();
+
+            getSupportActionBar().setTitle(title);
+
+            return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -399,16 +418,14 @@ public class navigation extends AppCompatActivity
 
         public ReadDataLoader(Context context) {
             super(context);
-            databaseConnector.open();
-
         }
 
 
         @Override
         public String loadInBackground() {
-
-            if (databaseConnector.isEmailExist(SaveSharedPreference.getUserName(getContext()).toLowerCase())) {
-
+            databaseConnector.open();
+            try {
+                if (databaseConnector.isImageExist(SaveSharedPreference.getUserName(getContext()).toLowerCase())) {
                 Cursor cursor = databaseConnector.getImageByEmail(SaveSharedPreference.getUserName(getContext()).toLowerCase());
 
                 // parse data from the cursor
@@ -418,8 +435,14 @@ public class navigation extends AppCompatActivity
                     } while (cursor.moveToNext());
                 databaseConnector.close();
                 return imageString;
-            } else
+                } else
+                    databaseConnector.close();
                 return null;
+            } catch (Exception e) {
+                Log.d("database", e.getMessage());
+                databaseConnector.close();
+                return null;
+            }
         }
     }
 
@@ -432,13 +455,12 @@ public class navigation extends AppCompatActivity
             super(context);
             this.imageStr = imageStr;
             databaseConnector = new DatabaseConnector(getContext());
-            databaseConnector.open();
         }
 
         @Override
         public Void loadInBackground() {
             // save to the local database
-
+            databaseConnector.open();
             if (!databaseConnector.isImageExist(SaveSharedPreference.getUserName(getContext()).toLowerCase())) {
                 databaseConnector.insertImageString(imageStr,
                         String.valueOf(SaveSharedPreference.getUserName(getContext()).toLowerCase()));

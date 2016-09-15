@@ -134,14 +134,16 @@ public class Attendance extends Fragment {
 
     private HashMap<String, ImageModel> mergeUsersListWithImageList(List<UserModel> userModellist, List<ImageModel> userImagelist) {
         HashMap<String, ImageModel> hashMap = new HashMap<>();
-        for (int i = 0; i < userModellist.size(); i++) {
-            for (int j = 0; j < userImagelist.size(); j++) {
-                if (userModellist.get(i).getEmail().toLowerCase().equals(userImagelist.get(j).getEmail().toLowerCase())) {
-                    hashMap.put(userModellist.get(i).getEmail().toLowerCase(), userImagelist.get(j));
+        if (userImagelist != null && userModellist != null) {
+            for (int i = 0; i < userModellist.size(); i++) {
+                for (int j = 0; j < userImagelist.size(); j++) {
+                    if (userModellist.get(i).getEmail().toLowerCase().equals(userImagelist.get(j).getEmail().toLowerCase())) {
+                        hashMap.put(userModellist.get(i).getEmail().toLowerCase(), userImagelist.get(j));
 
-                    Log.d("mergeUsersList", String.valueOf(hashMap.get(userModellist.get(i).getEmail().toLowerCase()).getEmail()));
-                    Log.d("mergeUsersList", String.valueOf(hashMap.get(userModellist.get(i).getEmail().toLowerCase()).getImagestr()));
+                        Log.d("mergeUsersList", String.valueOf(hashMap.get(userModellist.get(i).getEmail().toLowerCase()).getEmail()));
+                        Log.d("mergeUsersList", String.valueOf(hashMap.get(userModellist.get(i).getEmail().toLowerCase()).getImagestr()));
 
+                    }
                 }
             }
         }

@@ -43,7 +43,7 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/signupCompany"
         android:ems="10"
-        android:hint="Birthday"
+        android:hint="Age"
         android:inputType="number" />
 
         <EditText
