@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -41,6 +42,7 @@ public class Signinfrag extends Fragment {
     private DatabaseReference users;
     private String[] fields;
     private DatabaseConnector databaseConnector;
+    private TextInputLayout inputLayoutmail,inputLayoutpassword;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,10 +51,6 @@ public class Signinfrag extends Fragment {
         database = FirebaseDatabase.getInstance();
         databaseConnector = new DatabaseConnector(getActivity());
         databaseConnector.open();
-        if(SaveSharedPreference.getUserName(getContext()).length()> 0)
-        {
-            startActivity(new Intent(getContext(), navigation.class));
-        }
     }
 
     @Override
@@ -65,6 +63,8 @@ public class Signinfrag extends Fragment {
         password=(EditText)view.findViewById(R.id.signinpassid);
         Button login = (Button) view.findViewById(R.id.signinbtnid);
         TextView forgotpass = (TextView) view.findViewById(R.id.signinforgotid);
+        inputLayoutmail=(TextInputLayout)view.findViewById(R.id.TextInputLayoutmail);
+        inputLayoutpassword=(TextInputLayout)view.findViewById(R.id.TextInputLayoutpass);
 
         database = FirebaseDatabase.getInstance();
 
@@ -74,7 +74,7 @@ public class Signinfrag extends Fragment {
             @Override
             public void onClick(View view) {
                 if (isNetworkAvailable())
-                signIn();
+                    signIn();
                 else
                     Toast.makeText(getActivity(), "Please connect to internet", Toast.LENGTH_LONG).show();
 
@@ -99,13 +99,24 @@ public class Signinfrag extends Fragment {
         final String passtext=password.getText().toString();
 
         if (TextUtils.isEmpty(emailtext)) {
-            Toast.makeText(getContext(), "Enter Your Email!", Toast.LENGTH_SHORT).show();
+            inputLayoutmail.setError("email cannot be blank");
             return;
+        }
+        else
+        {
+            inputLayoutmail.setErrorEnabled(false);
+
         }
         if (TextUtils.isEmpty(passtext)) {
-            Toast.makeText(getContext(), "Enter email password!", Toast.LENGTH_SHORT).show();
+            inputLayoutpassword.setError("password cannot be blank");
             return;
         }
+        else
+            inputLayoutpassword.setErrorEnabled(false);
+
+
+
+
         //authenticate user
         auth.signInWithEmailAndPassword(emailtext, passtext)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -118,7 +129,7 @@ public class Signinfrag extends Fragment {
                             // there was an error
                             if (passtext.length() < 6) {
 
-                                Toast.makeText(getContext(),"enter more than 6 character", Toast.LENGTH_LONG).show();
+                                inputLayoutpassword.setError("Minim 6 characters required");
 
                             } else {
                                 Toast.makeText(getContext(),"Failure", Toast.LENGTH_LONG).show();

@@ -37,6 +37,7 @@ import org.mat.eduvation.LocaL_Database.dbHelper;
 import org.mat.eduvation.R;
 import org.mat.eduvation.SaveSharedPreference;
 
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class Profile extends AppCompatActivity {
     private String[] fields;
     private Toolbar toolbar;
     private String FirebaseChildkey;
+    int x;
 
     public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality) {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
@@ -136,9 +138,15 @@ public class Profile extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null) {
             ArrayList<Image> images = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
 
+
             Bitmap myBitmap = BitmapFactory.decodeFile(images.get(0).getPath());
 
-            String myBase64Image = encodeToBase64(myBitmap, Bitmap.CompressFormat.PNG, 100);
+            int nh = (int) ( myBitmap.getHeight() * (512.0 / myBitmap.getWidth()) );
+            Bitmap scaled = Bitmap.createScaledBitmap(myBitmap, 512, nh, true);
+
+            // Bitmap myimage=decodeBitmap(myBitmap);
+
+            String myBase64Image = encodeToBase64(scaled, Bitmap.CompressFormat.PNG, 100);
             saveToFireBase(myBase64Image);
 
             Picasso.with(this).load(new File(images.get(0).getPath())).placeholder(R.mipmap.ic_launcher).into(profilePhoto);
@@ -353,4 +361,7 @@ public class Profile extends AppCompatActivity {
         }
 
     }
+
+
+
 }
