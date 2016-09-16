@@ -29,7 +29,6 @@ import com.google.firebase.database.ValueEventListener;
 import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
 import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
 import com.nguyenhoanglam.imagepicker.model.Image;
-import com.squareup.picasso.Picasso;
 
 import org.mat.eduvation.ImageModel;
 import org.mat.eduvation.LocaL_Database.DatabaseConnector;
@@ -37,9 +36,7 @@ import org.mat.eduvation.LocaL_Database.dbHelper;
 import org.mat.eduvation.R;
 import org.mat.eduvation.SaveSharedPreference;
 
-
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -51,6 +48,7 @@ public class Profile extends AppCompatActivity {
     private static final int REQUEST_CODE_PICKER = 1;
     public final int READ_FROM_DATABASE_ID = 42;
     public final int SAVE_TO_DATABASE_ID = 43;
+    int x;
     private CircleImageView profilePhoto;
     private TextView name, company, email;
     private DatabaseConnector databaseConnector;
@@ -60,7 +58,6 @@ public class Profile extends AppCompatActivity {
     private String[] fields;
     private Toolbar toolbar;
     private String FirebaseChildkey;
-    int x;
 
     public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality) {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
@@ -144,12 +141,14 @@ public class Profile extends AppCompatActivity {
             int nh = (int) ( myBitmap.getHeight() * (512.0 / myBitmap.getWidth()) );
             Bitmap scaled = Bitmap.createScaledBitmap(myBitmap, 512, nh, true);
 
+            Drawable d = new BitmapDrawable(getResources(), scaled);
+            profilePhoto.setImageDrawable(d);
+
             // Bitmap myimage=decodeBitmap(myBitmap);
 
             String myBase64Image = encodeToBase64(scaled, Bitmap.CompressFormat.PNG, 100);
+            //Picasso.with(this).load(new File(images.get(0).getPath())).placeholder(R.mipmap.ic_launcher).into(profilePhoto);
             saveToFireBase(myBase64Image);
-
-            Picasso.with(this).load(new File(images.get(0).getPath())).placeholder(R.mipmap.ic_launcher).into(profilePhoto);
 
 
         }

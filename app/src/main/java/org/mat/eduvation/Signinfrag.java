@@ -51,6 +51,9 @@ public class Signinfrag extends Fragment {
         database = FirebaseDatabase.getInstance();
         databaseConnector = new DatabaseConnector(getActivity());
         databaseConnector.open();
+        if (SaveSharedPreference.getUserName(getContext()).length() > 0) {
+            startActivity(new Intent(getContext(), navigation.class));
+        }
     }
 
     @Override

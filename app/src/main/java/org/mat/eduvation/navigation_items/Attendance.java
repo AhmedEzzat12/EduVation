@@ -108,7 +108,7 @@ public class Attendance extends Fragment {
                         UserModellist = new ArrayList<>(data.values());
                         Collections.sort(UserModellist, new Comparator<UserModel>() {
                             public int compare(UserModel u1, UserModel u2) {
-                                return u1.getName().compareTo(u2.getName());
+                                return u1.getName().toLowerCase().compareTo(u2.getName().toLowerCase());
                             }
                         });
                         UsersWithImagesList = mergeUsersListWithImageList(UserModellist, UserImagelist);
