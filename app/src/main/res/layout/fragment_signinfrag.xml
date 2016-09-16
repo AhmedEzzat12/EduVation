@@ -13,32 +13,41 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-    <EditText
-        android:id="@+id/signinmailid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter your email"
-
-        android:inputType="textEmailAddress" />
-
-
-        <EditText
-        android:id="@+id/signinpassid"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/TextInputLayoutmail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-        android:hint="password"
-            android:inputType="textPassword"
+            android:layout_height="wrap_content">
 
-        />
+            <EditText
+                android:id="@+id/signinmailid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Enter your email"
+                android:inputType="textEmailAddress" />
+        </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/TextInputLayoutpass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+
+            <EditText
+                android:id="@+id/signinpassid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="password"
+                android:inputType="textPassword"
+
+                />
+
+        </android.support.design.widget.TextInputLayout>
 
         <TextView
             android:id="@+id/signinforgotid"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
             android:clickable="true"
@@ -46,16 +55,16 @@
             android:text="Forgot password ?"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <Button
-        android:id="@+id/signinbtnid"
-        style="?attr/borderlessButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginTop="36dp"
-        android:text="LOGIN"
-        android:textColor="@color/colorAccent"
-        android:textSize="20sp" />
+        <Button
+            android:id="@+id/signinbtnid"
+            style="?attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginTop="36dp"
+            android:text="LOGIN"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp" />
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
