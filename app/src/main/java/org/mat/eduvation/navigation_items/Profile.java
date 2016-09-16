@@ -37,6 +37,7 @@ import org.mat.eduvation.LocaL_Database.dbHelper;
 import org.mat.eduvation.R;
 import org.mat.eduvation.SaveSharedPreference;
 
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class Profile extends AppCompatActivity {
     private String[] fields;
     private Toolbar toolbar;
     private String FirebaseChildkey;
+    int x;
 
     public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality) {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
@@ -359,4 +361,7 @@ public class Profile extends AppCompatActivity {
         }
 
     }
+
+
+
 }
