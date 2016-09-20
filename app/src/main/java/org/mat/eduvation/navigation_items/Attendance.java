@@ -2,6 +2,7 @@ package org.mat.eduvation.navigation_items;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -20,8 +21,6 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.GenericTypeIndicator;
 import com.firebase.client.ValueEventListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import org.mat.eduvation.ImageModel;
 import org.mat.eduvation.R;
@@ -33,69 +32,61 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-
 /**
  * A simple {@link Fragment} subclass.
  */
 public class Attendance extends Fragment {
     private List<UserModel> UserModellist;
     private List<ImageModel> UserImagelist;
-    private RecyclerView recyclerView;
     private attendanceAdapter adapter;
-    private HashMap<String, ImageModel> UsersWithImagesList;
-    private View root;
+    private HashMap<String, Bitmap> hashMapwithImages;
+    private Firebase refUsers, refImages;
     public Attendance() {
         // Required empty public constructor
-        UserModellist = new ArrayList<>();
     }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Firebase.setAndroidContext(getContext());
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-    }
+        UserModellist = new ArrayList<>();
+        hashMapwithImages = new HashMap<>();
+        adapter = new attendanceAdapter(hashMapwithImages, UserModellist);
+        refUsers = new Firebase("https://eduvation-7aff9.firebaseio.com/users");
+        refImages = new Firebase("https://eduvation-7aff9.firebaseio.com/images");
 
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        root = inflater.inflate(R.layout.fragment_attendance, container, false);
+        View root = inflater.inflate(R.layout.fragment_attendance, container, false);
+
 
         Toast.makeText(getContext(), "Loading data please wait", Toast.LENGTH_LONG).show();
-
-        recyclerView = (RecyclerView) root.findViewById(R.id.rectcleattendance);
-        adapter = new attendanceAdapter(UserModellist, UsersWithImagesList);
+        RecyclerView recyclerView = (RecyclerView) root.findViewById(R.id.rectcleattendance);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
 
         // Get a reference to our posts
-        Firebase refUsers = new Firebase("https://eduvation-7aff9.firebaseio.com/users");
-        Firebase refImages = new Firebase("https://eduvation-7aff9.firebaseio.com/images");
-
         if (isNetworkAvailable()) {
-
             refImages.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     HashMap<String, ImageModel> data = dataSnapshot.getValue(new GenericTypeIndicator<HashMap<String, ImageModel>>() {
                     });
-                    //UserImagelist=  dataSnapshot.getValue(ImageModel.class);
                     if (data != null) {
                         Log.d("ImageModel data", String.valueOf(data.size()));
                         UserImagelist = new ArrayList<>(data.values());
-                        UsersWithImagesList = mergeUsersListWithImageList(UserModellist, UserImagelist);
-                        adapter.updateData(UserModellist, UsersWithImagesList);
-                        // recyclerView.setAdapter(adapter);
+                        hashMapwithImages = mergeUsersListWithImageList(UserModellist, UserImagelist);
+                        // bitmapList=convert(UsersWithImagesList);
+                        adapter.updateData(hashMapwithImages, UserModellist);
                     }
                 }
-
                 @Override
                 public void onCancelled(FirebaseError firebaseError) {
                     Toast.makeText(getContext(), "The read failed: " + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
                 }
-
             });
             refUsers.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -111,45 +102,52 @@ public class Attendance extends Fragment {
                                 return u1.getName().toLowerCase().compareTo(u2.getName().toLowerCase());
                             }
                         });
-                        UsersWithImagesList = mergeUsersListWithImageList(UserModellist, UserImagelist);
-                        adapter.updateData(UserModellist, UsersWithImagesList);
-                        //recyclerView.setAdapter(adapter);
+                        hashMapwithImages = mergeUsersListWithImageList(UserModellist, UserImagelist);
+                        //bitmapList=convert(UsersWithImagesList);
+                        adapter.updateData(hashMapwithImages, UserModellist);
                     }
                 }
-
                 @Override
                 public void onCancelled(FirebaseError firebaseError) {
                     Toast.makeText(getContext(), "The read failed: " + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
                 }
-
             });
-
-            // recyclerView.setPadding(15,15,15,15);
-            //   Toast.makeText(getContext(),UserModellist.get(1).getName(),Toast.LENGTH_LONG).show();
-
         } else
             Toast.makeText(getActivity(), "Please connect to internet to get attendees", Toast.LENGTH_LONG).show();
         return root;
     }
 
-    private HashMap<String, ImageModel> mergeUsersListWithImageList(List<UserModel> userModellist, List<ImageModel> userImagelist) {
-        HashMap<String, ImageModel> hashMap = new HashMap<>();
+    private HashMap<String, Bitmap> mergeUsersListWithImageList(List<UserModel> userModellist, List<ImageModel> userImagelist) {
+        HashMap<String, Bitmap> hashMap = new HashMap<>();
+
         if (userImagelist != null && userModellist != null) {
             for (int i = 0; i < userModellist.size(); i++) {
                 for (int j = 0; j < userImagelist.size(); j++) {
                     if (userModellist.get(i).getEmail().toLowerCase().equals(userImagelist.get(j).getEmail().toLowerCase())) {
-                        hashMap.put(userModellist.get(i).getEmail().toLowerCase(), userImagelist.get(j));
-
-                        Log.d("mergeUsersList", String.valueOf(hashMap.get(userModellist.get(i).getEmail().toLowerCase()).getEmail()));
-                        Log.d("mergeUsersList", String.valueOf(hashMap.get(userModellist.get(i).getEmail().toLowerCase()).getImagestr()));
-
+                        //hashMap.put(userModellist.get(i).getEmail().toLowerCase(), userImagelist.get(j));
+                        hashMap.put(userModellist.get(i).getEmail().toLowerCase(), Profile.decodeBase64(userImagelist.get(j).getImagestr()));
+                        // Log.d("mergeUsersList", String.valueOf(hashMap.get(userModellist.get(i).getEmail().toLowerCase()).getEmail()));
+                        //Log.d("mergeUsersList", String.valueOf(hashMap.get(userModellist.get(i).getEmail().toLowerCase()).getImagestr()));
                     }
                 }
             }
         }
+        // adapter = new attendanceAdapter(getContext(),convert(hashMap),UserModellist, UsersWithImagesList);
+        //recyclerView.setAdapter(adapter);
         return hashMap;
     }
+    // public List<Bitmap>convert(HashMap<String, ImageModel> mUsersWithImagesList) {
 
+    //List<Bitmap> mylistimage = new ArrayList<>();
+    //Iterator myVeryOwnIterator = mUsersWithImagesList.keySet().iterator();
+    //while (myVeryOwnIterator.hasNext()) {
+    //String key = (String) myVeryOwnIterator.next();
+    //String value = mUsersWithImagesList.get(key).getImagestr();
+    //     Bitmap myBitmapAgain = Profile.decodeBase64(value);
+    // mylistimage.add(myBitmapAgain);
+    // }
+    // return mylistimage;
+    //}
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -157,5 +155,19 @@ public class Attendance extends Fragment {
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
+    @Override
+    public void onPause() {
+        Log.d("onPause", "started");
+        //getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+        super.onPause();
 
+    }
+
+    @Override
+    public void onStop() {
+        Log.d("onPause", "started");
+        //getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+        super.onStop();
+
+    }
 }

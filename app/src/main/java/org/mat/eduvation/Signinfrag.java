@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,9 +41,10 @@ public class Signinfrag extends Fragment {
     private FirebaseAuth auth;
     private FirebaseDatabase database;
     private DatabaseReference users;
-    private String[] fields;
     private DatabaseConnector databaseConnector;
     private TextInputLayout inputLayoutmail,inputLayoutpassword;
+    private ProgressBar progressBar;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class Signinfrag extends Fragment {
         TextView forgotpass = (TextView) view.findViewById(R.id.signinforgotid);
         inputLayoutmail=(TextInputLayout)view.findViewById(R.id.TextInputLayoutmail);
         inputLayoutpassword=(TextInputLayout)view.findViewById(R.id.TextInputLayoutpass);
-
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         database = FirebaseDatabase.getInstance();
 
         auth = FirebaseAuth.getInstance();
@@ -96,29 +98,26 @@ public class Signinfrag extends Fragment {
         return view;
 
     }
-    public void signIn(){
 
-        final String emailtext=email.getText().toString();
-        final String passtext=password.getText().toString();
+    public void signIn() {
+
+        final String emailtext = email.getText().toString();
+        final String passtext = password.getText().toString();
 
         if (TextUtils.isEmpty(emailtext)) {
             inputLayoutmail.setError("email cannot be blank");
             return;
-        }
-        else
-        {
+        } else {
             inputLayoutmail.setErrorEnabled(false);
 
         }
         if (TextUtils.isEmpty(passtext)) {
             inputLayoutpassword.setError("password cannot be blank");
             return;
-        }
-        else
+        } else {
             inputLayoutpassword.setErrorEnabled(false);
-
-
-
+        }
+        progressBar.setVisibility(View.VISIBLE);
 
         //authenticate user
         auth.signInWithEmailAndPassword(emailtext, passtext)
@@ -128,6 +127,8 @@ public class Signinfrag extends Fragment {
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
+                        progressBar.setVisibility(View.GONE);
+
                         if (!task.isSuccessful()) {
                             // there was an error
                             if (passtext.length() < 6) {
@@ -153,7 +154,7 @@ public class Signinfrag extends Fragment {
     }
 
     public void saveCurrentDataToFB_DB(String email) {
-        fields = email.split("\\.");
+        String[] fields = email.split("\\.");
         final String key = keyGenerator(fields);
         users = database.getReference("users");
         users.addValueEventListener(new ValueEventListener() {

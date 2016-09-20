@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -21,12 +22,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,6 +59,7 @@ public class navigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
     public final int READ_FROM_DATABASE_ID = 42;
     public final int SAVE_TO_DATABASE_ID = 43;
+    ActionBarDrawerToggle toggle;
     private Fragment fragment = null;
     private Toolbar toolbar;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -69,39 +73,48 @@ public class navigation extends AppCompatActivity
     private String userEmail;
     private String[] fields;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
-
-
-
         toolbar = (Toolbar) findViewById(R.id.toolbarNav);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Home");
+        Firebase.setAndroidContext(this);
+
+
         userEmail = SaveSharedPreference.getUserName(this);
         fields = userEmail.split("\\.");
         FirebaseChildkey = keyGenerator(fields);
-
-        //Set the fragment initially
         fragment = new home();
         android.support.v4.app.FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
 
+        getSupportActionBar().setTitle("Home");
 
-        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                toolbar,  /* nav drawer icon to replace 'Up' caret */
-                R.string.navigation_drawer_open,  /* "open drawer" description */
-                R.string.navigation_drawer_close  /* "close drawer" description */
-        );
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        //Set the fragment initially
+
+        toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        toggle.setDrawerIndicatorEnabled(false);
+
+        // mDrawerToggle.setHomeAsUpIndicator(R.drawable.menu_icon);
+        toolbar.setNavigationIcon(R.drawable.menu);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(Gravity.LEFT);
+            }
+        });
+
+
+        drawer.addDrawerListener(toggle);
 
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_36dp);
 
@@ -154,6 +167,13 @@ public class navigation extends AppCompatActivity
 
         else
             loadDataFromDatabase();
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        toggle.syncState();
+
     }
 
     @Override
@@ -426,15 +446,15 @@ public class navigation extends AppCompatActivity
             databaseConnector.open();
             try {
                 if (databaseConnector.isImageExist(SaveSharedPreference.getUserName(getContext()).toLowerCase())) {
-                Cursor cursor = databaseConnector.getImageByEmail(SaveSharedPreference.getUserName(getContext()).toLowerCase());
+                    Cursor cursor = databaseConnector.getImageByEmail(SaveSharedPreference.getUserName(getContext()).toLowerCase());
 
-                // parse data from the cursor
-                if (cursor.moveToFirst())
-                    do {
-                        imageString = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_IMAGE_STRING));
-                    } while (cursor.moveToNext());
-                databaseConnector.close();
-                return imageString;
+                    // parse data from the cursor
+                    if (cursor.moveToFirst())
+                        do {
+                            imageString = cursor.getString(cursor.getColumnIndex(dbHelper.COLUMN_IMAGE_STRING));
+                        } while (cursor.moveToNext());
+                    databaseConnector.close();
+                    return imageString;
                 } else
                     databaseConnector.close();
                 return null;

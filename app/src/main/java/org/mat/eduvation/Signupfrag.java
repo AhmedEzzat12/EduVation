@@ -7,12 +7,14 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +36,8 @@ public class Signupfrag extends Fragment {
     private UserModel userModel;
     private DatabaseReference users;
     private DatabaseConnector databaseConnector;
-
+    private TextInputLayout inputLayoutmail, inputLayoutpassword, inputLayoutUsername;
+    private ProgressBar progressBar;
     public static String keyGenerator(String[] s) {
         String key = "edu";
         for (String value : s) {
@@ -65,6 +68,10 @@ public class Signupfrag extends Fragment {
         company = (TextView) root.findViewById(R.id.signupCompany);
         birthday = (TextView) root.findViewById(R.id.birthday);
         Button register = (Button) root.findViewById(R.id.signupbtnid);
+        inputLayoutmail = (TextInputLayout) root.findViewById(R.id.TextInputLayoutEmail);
+        inputLayoutpassword = (TextInputLayout) root.findViewById(R.id.TextInputLayoutPass);
+        inputLayoutUsername = (TextInputLayout) root.findViewById(R.id.TextInputLayoutUsername);
+        progressBar = (ProgressBar) root.findViewById(R.id.progressBar2);
 
         database = FirebaseDatabase.getInstance();
         users = database.getReference("users");
@@ -99,23 +106,34 @@ public class Signupfrag extends Fragment {
         String pass=passwoard.getText().toString();
         final String username=name.getText().toString();
         if (TextUtils.isEmpty(username)) {
-            Toast.makeText(getContext(), "Enter Your Name!", Toast.LENGTH_SHORT).show();
+            inputLayoutUsername.setError("username cannot be blank");
             return;
+        } else {
+            inputLayoutUsername.setErrorEnabled(false);
         }
         if (TextUtils.isEmpty(mail)) {
-            Toast.makeText(getContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
+            inputLayoutmail.setError("email cannot be blank");
             return;
+        } else {
+            inputLayoutmail.setErrorEnabled(false);
+
         }
 
         if (TextUtils.isEmpty(pass)) {
-            Toast.makeText(getContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+            inputLayoutUsername.setError("password cannot be blank");
             return;
+        } else {
+            inputLayoutUsername.setErrorEnabled(false);
         }
-
         if (pass.length() < 6) {
-            Toast.makeText(getContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
+            inputLayoutpassword.setError("Password too short, enter minimum 6 characters!");
             return;
+        } else {
+            inputLayoutpassword.setErrorEnabled(false);
+
         }
+        progressBar.setVisibility(View.VISIBLE);
+
         auth.createUserWithEmailAndPassword(mail,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {

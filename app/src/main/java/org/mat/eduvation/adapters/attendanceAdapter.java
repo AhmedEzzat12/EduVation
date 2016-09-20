@@ -1,8 +1,5 @@
 package org.mat.eduvation.adapters;
-
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.mat.eduvation.ImageModel;
 import org.mat.eduvation.R;
 import org.mat.eduvation.UserModel;
 
@@ -18,67 +14,47 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static org.mat.eduvation.navigation_items.Profile.decodeBase64;
-
-/**
- * Created by gmgn on 8/20/2016.
- */
-
 public class attendanceAdapter extends RecyclerView.Adapter<attendanceAdapter.myholder> {
-
     private List<UserModel> userslist = new ArrayList<>();
-    private HashMap<String, ImageModel> userImageList = new HashMap<>();
+    //private List<Bitmap>temp=new ArrayList<>();
+    private HashMap<String, Bitmap> hashMapUpdated = new HashMap<>();
 
-    public attendanceAdapter(List<UserModel> userslist1, HashMap<String, ImageModel> usersImagelist1) {
-    this.userslist=userslist1;
-        this.userImageList = usersImagelist1;
+    public attendanceAdapter(HashMap<String, Bitmap> hashMapUpdated, List<UserModel> userslist1) {
+
+        this.userslist.clear();
+        this.userslist = userslist1;
+        this.hashMapUpdated.clear();
+        this.hashMapUpdated = hashMapUpdated;
     }
     @Override
     public myholder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-
-        View row= LayoutInflater.from(parent.getContext()).inflate(R.layout.attendance_row,parent,false);
-        myholder holder=new myholder(row);
-
-        return holder;
+        View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.attendance_row, parent, false);
+        return new myholder(row);
     }
 
     @Override
     public void onBindViewHolder(myholder holder, int position) {
 
-        String nameRow = userslist.get(position).getName();
-        try {
-            String imageStr = userImageList.get(userslist.get(position).getEmail().toLowerCase()).getImagestr();
-            Bitmap myBitmapAgain = decodeBase64(imageStr);
-            //Log.d("getDataFB", imageMap.get("imageStr"));
-            Drawable d = new BitmapDrawable(myBitmapAgain);
-            holder.userImage.setImageDrawable(d);
-            holder.name.setText(nameRow);
-
-        } catch (Exception e) {
-
+        if (hashMapUpdated.get(userslist.get(position).getEmail().toLowerCase()) != null) {
+            holder.userImage.setImageBitmap(hashMapUpdated.get(userslist.get(position).getEmail().toLowerCase()));
+            holder.name.setText(userslist.get(position).getName());
+        } else {
             //Log.e("attendance adapter", e.getMessage());
-
-            holder.name.setText(nameRow);
+            holder.name.setText(userslist.get(position).getName());
         }
-
     }
-
     @Override
     public int getItemCount() {
-
-
         return userslist.size();
     }
 
-    public void updateData(List<UserModel> userslist1, HashMap<String, ImageModel> usersImagelist1) {
-        this.userslist = userslist1;
-        this.userImageList = usersImagelist1;
+    public void updateData(HashMap<String, Bitmap> hashMapUpdated, List<UserModel> userslist) {
+        this.userslist = userslist;
+        this.hashMapUpdated = hashMapUpdated;
         notifyDataSetChanged();
     }
 
-    class myholder extends RecyclerView.ViewHolder{
-
+    class myholder extends RecyclerView.ViewHolder {
         TextView name;
         ImageView userImage;
         public myholder(View itemView) {
