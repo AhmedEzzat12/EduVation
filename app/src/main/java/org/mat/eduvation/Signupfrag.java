@@ -53,7 +53,7 @@ public class Signupfrag extends Fragment {
         auth=FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         databaseConnector = new DatabaseConnector(getActivity());
-        databaseConnector.open();
+        // databaseConnector.open();
     }
 
     @Override
@@ -143,10 +143,10 @@ public class Signupfrag extends Fragment {
 
                     writeNewUser(name.getText().toString(), email.getText().toString().toLowerCase(),
                             company.getText().toString(), String.valueOf(birthday.getText()));
-
+                    databaseConnector.open();
                     databaseConnector.insertUser(name.getText().toString(), company.getText().toString(), String.valueOf(birthday.getText())
                             , email.getText().toString().toLowerCase(), UserModel.KEY);
-
+                    databaseConnector.close();
                     SaveSharedPreference.setUserName(getContext(), email.getText().toString().toLowerCase());
 
                     startActivity(new Intent(getContext(), navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));

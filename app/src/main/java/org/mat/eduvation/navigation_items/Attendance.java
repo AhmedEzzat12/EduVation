@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -41,6 +42,9 @@ public class Attendance extends Fragment {
     private attendanceAdapter adapter;
     private HashMap<String, Bitmap> hashMapwithImages;
     private Firebase refUsers, refImages;
+    private ValueEventListener valuelisten1;
+    private ValueEventListener valuelisten2;
+
     public Attendance() {
         // Required empty public constructor
     }
@@ -50,7 +54,7 @@ public class Attendance extends Fragment {
         Firebase.setAndroidContext(getContext());
         UserModellist = new ArrayList<>();
         hashMapwithImages = new HashMap<>();
-        adapter = new attendanceAdapter(hashMapwithImages, UserModellist);
+        adapter = new attendanceAdapter(hashMapwithImages, UserModellist, getContext());
         refUsers = new Firebase("https://eduvation-7aff9.firebaseio.com/users");
         refImages = new Firebase("https://eduvation-7aff9.firebaseio.com/images");
 
@@ -70,7 +74,9 @@ public class Attendance extends Fragment {
 
         // Get a reference to our posts
         if (isNetworkAvailable()) {
-            refImages.addValueEventListener(new ValueEventListener() {
+
+            valuelisten1 = new ValueEventListener() {
+
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     HashMap<String, ImageModel> data = dataSnapshot.getValue(new GenericTypeIndicator<HashMap<String, ImageModel>>() {
@@ -87,8 +93,10 @@ public class Attendance extends Fragment {
                 public void onCancelled(FirebaseError firebaseError) {
                     Toast.makeText(getContext(), "The read failed: " + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
                 }
-            });
-            refUsers.addValueEventListener(new ValueEventListener() {
+            };
+            refImages.addValueEventListener(valuelisten1);
+
+            valuelisten2 = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     //   Toast.makeText(getContext(),"success",Toast.LENGTH_LONG).show();
@@ -111,7 +119,8 @@ public class Attendance extends Fragment {
                 public void onCancelled(FirebaseError firebaseError) {
                     Toast.makeText(getContext(), "The read failed: " + firebaseError.getMessage(), Toast.LENGTH_LONG).show();
                 }
-            });
+            };
+            refUsers.addValueEventListener(valuelisten2);
         } else
             Toast.makeText(getActivity(), "Please connect to internet to get attendees", Toast.LENGTH_LONG).show();
         return root;
@@ -170,4 +179,14 @@ public class Attendance extends Fragment {
         super.onStop();
 
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (refImages != null && refUsers != null) {
+            refImages.removeEventListener(valuelisten1);
+            refUsers.removeEventListener(valuelisten2);
+        }
+    }
+
 }

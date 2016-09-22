@@ -1,6 +1,9 @@
 package org.mat.eduvation.adapters;
+
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,32 +17,36 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class attendanceAdapter extends RecyclerView.Adapter<attendanceAdapter.myholder> {
+public class attendanceAdapter extends RecyclerView.Adapter<attendanceAdapter.myHolder> {
     private List<UserModel> userslist = new ArrayList<>();
+    private Context context;
     //private List<Bitmap>temp=new ArrayList<>();
     private HashMap<String, Bitmap> hashMapUpdated = new HashMap<>();
 
-    public attendanceAdapter(HashMap<String, Bitmap> hashMapUpdated, List<UserModel> userslist1) {
-
+    public attendanceAdapter(HashMap<String, Bitmap> hashMapUpdated, List<UserModel> userslist1, Context context) {
+        this.context = context;
         this.userslist.clear();
         this.userslist = userslist1;
         this.hashMapUpdated.clear();
         this.hashMapUpdated = hashMapUpdated;
     }
     @Override
-    public myholder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public myHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View row = LayoutInflater.from(parent.getContext()).inflate(R.layout.attendance_row, parent, false);
-        return new myholder(row);
+        return new myHolder(row);
     }
 
     @Override
-    public void onBindViewHolder(myholder holder, int position) {
+    public void onBindViewHolder(myHolder holder, int position) {
 
         if (hashMapUpdated.get(userslist.get(position).getEmail().toLowerCase()) != null) {
             holder.userImage.setImageBitmap(hashMapUpdated.get(userslist.get(position).getEmail().toLowerCase()));
+            Log.d("IFAttAdapter", userslist.get(position).getName());
             holder.name.setText(userslist.get(position).getName());
         } else {
             //Log.e("attendance adapter", e.getMessage());
+            Log.d("elseAttAdapter", userslist.get(position).getName());
+            holder.userImage.setImageResource(R.mipmap.ic_launcher);
             holder.name.setText(userslist.get(position).getName());
         }
     }
@@ -48,16 +55,22 @@ public class attendanceAdapter extends RecyclerView.Adapter<attendanceAdapter.my
         return userslist.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
     public void updateData(HashMap<String, Bitmap> hashMapUpdated, List<UserModel> userslist) {
         this.userslist = userslist;
         this.hashMapUpdated = hashMapUpdated;
         notifyDataSetChanged();
     }
 
-    class myholder extends RecyclerView.ViewHolder {
+    class myHolder extends RecyclerView.ViewHolder {
         TextView name;
         ImageView userImage;
-        public myholder(View itemView) {
+
+        public myHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.itemName);
             userImage = (ImageView) itemView.findViewById(R.id.itemImage);

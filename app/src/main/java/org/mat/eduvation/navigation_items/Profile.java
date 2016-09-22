@@ -58,6 +58,7 @@ public class Profile extends AppCompatActivity {
     private String[] fields;
     private Toolbar toolbar;
     private String FirebaseChildkey;
+    //private ValueEventListener myvalueimage;
 
     public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality) {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
@@ -121,11 +122,11 @@ public class Profile extends AppCompatActivity {
             }
         });
 
-        if (isNetworkAvailable())
+        //if (isNetworkAvailable())
 
-            getImageFromFB_DB();
+        //getImageFromFB_DB();
 
-        else
+        //else
             loadDataFromDatabase();
 
     }

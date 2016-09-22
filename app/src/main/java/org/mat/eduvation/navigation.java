@@ -59,33 +59,30 @@ public class navigation extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
     public final int READ_FROM_DATABASE_ID = 42;
     public final int SAVE_TO_DATABASE_ID = 43;
-    ActionBarDrawerToggle toggle;
+    private ActionBarDrawerToggle toggle;
     private Fragment fragment = null;
-    private Toolbar toolbar;
-    private ActionBarDrawerToggle mDrawerToggle;
     private String title="";
     private CircleImageView circleImageView;
     private TextView userNameTxtView, userCompanyTxtView;
     private DatabaseConnector databaseConnector;
     private DatabaseReference images;
-    private FirebaseDatabase database;
     private String FirebaseChildkey;
-    private String userEmail;
-    private String[] fields;
+    private ValueEventListener imagevaluel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
-        toolbar = (Toolbar) findViewById(R.id.toolbarNav);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarNav);
         setSupportActionBar(toolbar);
 
         Firebase.setAndroidContext(this);
 
 
-        userEmail = SaveSharedPreference.getUserName(this);
-        fields = userEmail.split("\\.");
+        String userEmail = SaveSharedPreference.getUserName(this);
+        String[] fields = userEmail.split("\\.");
         FirebaseChildkey = keyGenerator(fields);
+
         fragment = new home();
         android.support.v4.app.FragmentTransaction fragmentTransaction =
                 getSupportFragmentManager().beginTransaction();
@@ -120,7 +117,7 @@ public class navigation extends AppCompatActivity
 
         databaseConnector = new DatabaseConnector(this);
 
-        database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         images = database.getReference("images");
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -227,7 +224,7 @@ public class navigation extends AppCompatActivity
     @Override
     public void onPostCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onPostCreate(savedInstanceState, persistentState);
-        mDrawerToggle.syncState();
+        toggle.syncState();
 
     }
 
@@ -347,7 +344,7 @@ public class navigation extends AppCompatActivity
             databaseConnector.close();
             loadDataFromDatabase();
         } else {
-            images.addValueEventListener(new ValueEventListener() {
+            imagevaluel = new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     try {
@@ -373,7 +370,8 @@ public class navigation extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "Please wait while loading your profile picture ", Toast.LENGTH_LONG).show();
                     Log.e("onCancelled image", databaseError.getMessage());
                 }
-            });
+            };
+            images.addValueEventListener(imagevaluel);
         }
     }
 
@@ -430,6 +428,15 @@ public class navigation extends AppCompatActivity
 
         }
         databaseConnector.close();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (imagevaluel != null) {
+            images.removeEventListener(imagevaluel);
+
+        }
     }
 
     static class ReadDataLoader extends AsyncTaskLoader<String> {
@@ -490,6 +497,7 @@ public class navigation extends AppCompatActivity
             databaseConnector.close();
             return null;
         }
+
     }
 
 }

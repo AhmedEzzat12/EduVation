@@ -44,7 +44,7 @@ public class Signinfrag extends Fragment {
     private DatabaseConnector databaseConnector;
     private TextInputLayout inputLayoutmail,inputLayoutpassword;
     private ProgressBar progressBar;
-
+    private ValueEventListener valueEvent;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public class Signinfrag extends Fragment {
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         databaseConnector = new DatabaseConnector(getActivity());
-        databaseConnector.open();
+        //databaseConnector.open();
         if (SaveSharedPreference.getUserName(getContext()).length() > 0) {
             startActivity(new Intent(getContext(), navigation.class));
         }
@@ -145,8 +145,6 @@ public class Signinfrag extends Fragment {
                                 saveCurrentDataToFB_DB(emailtext.toLowerCase());
                             }
 
-                            startActivity(new Intent(getActivity(), navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
-                            getActivity().finish();
 
                         }
                     }
@@ -157,19 +155,24 @@ public class Signinfrag extends Fragment {
         String[] fields = email.split("\\.");
         final String key = keyGenerator(fields);
         users = database.getReference("users");
-        users.addValueEventListener(new ValueEventListener() {
+        valueEvent = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 UserModel userModel = dataSnapshot.child(String.valueOf(key)).getValue(UserModel.class);
                 Log.d(TAG_LOG, userModel.getEmail());
+                databaseConnector.open();
                 databaseConnector.insertUser(userModel.getName(), userModel.getCompany(), String.valueOf(userModel.getB_date()), userModel.getEmail().toLowerCase(), key);
+                databaseConnector.close();
+                startActivity(new Intent(getActivity(), navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                getActivity().finish();
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        };
+        users.addValueEventListener(valueEvent);
 
     }
 
@@ -180,4 +183,11 @@ public class Signinfrag extends Fragment {
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (users != null)
+            users.removeEventListener(valueEvent);
+
+    }
 }
