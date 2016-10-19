@@ -36,7 +36,7 @@
             android:configChanges="screenSize"
             android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

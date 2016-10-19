@@ -447,7 +447,6 @@ public class navigation extends AppCompatActivity
             super(context);
         }
 
-
         @Override
         public String loadInBackground() {
             databaseConnector.open();

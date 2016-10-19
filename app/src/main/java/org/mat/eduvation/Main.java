@@ -12,7 +12,8 @@ public class Main extends AppCompatActivity {
 
             @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+                setTheme(R.style.AppTheme_NoActionBar);
+                super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);

@@ -15,6 +15,7 @@ import org.mat.eduvation.R;
 public class Speakers extends Fragment {
 
 
+
     public Speakers() {
         // Required empty public constructor
     }
@@ -23,8 +24,9 @@ public class Speakers extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View root = inflater.inflate(R.layout.fragment_speakers, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_speakers, container, false);
+        return root;
     }
 
 }

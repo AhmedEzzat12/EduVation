@@ -33,7 +33,6 @@ public class home extends Fragment {
     private DatabaseReference home_desc1;
     private DatabaseReference home_desc2;
     private DatabaseReference home_desc3;
-
     public home() {
         // Required empty public constructor
     }
@@ -51,7 +50,6 @@ public class home extends Fragment {
         home_desc1_textV = (TextView) root.findViewById(R.id.home_desc1);
         home_desc2_textV = (TextView) root.findViewById(R.id.home_desc2);
         home_desc3_textV = (TextView) root.findViewById(R.id.home_desc3);
-
         database = FirebaseDatabase.getInstance();
         home_desc1 = database.getReference("home_desc1");
         home_desc2 = database.getReference("home_desc2");

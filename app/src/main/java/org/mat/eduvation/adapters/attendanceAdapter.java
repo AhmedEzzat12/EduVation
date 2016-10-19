@@ -25,9 +25,7 @@ public class attendanceAdapter extends RecyclerView.Adapter<attendanceAdapter.my
 
     public attendanceAdapter(HashMap<String, Bitmap> hashMapUpdated, List<UserModel> userslist1, Context context) {
         this.context = context;
-        this.userslist.clear();
         this.userslist = userslist1;
-        this.hashMapUpdated.clear();
         this.hashMapUpdated = hashMapUpdated;
     }
     @Override

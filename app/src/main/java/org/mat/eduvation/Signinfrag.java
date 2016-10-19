@@ -45,17 +45,21 @@ public class Signinfrag extends Fragment {
     private TextInputLayout inputLayoutmail,inputLayoutpassword;
     private ProgressBar progressBar;
     private ValueEventListener valueEvent;
+    private ValueEventListener imagevaluel;
+    private String FirebaseChildkey;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        auth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        databaseConnector = new DatabaseConnector(getActivity());
         //databaseConnector.open();
         if (SaveSharedPreference.getUserName(getContext()).length() > 0) {
             startActivity(new Intent(getContext(), navigation.class));
         }
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        databaseConnector = new DatabaseConnector(getActivity());
+
+
     }
 
     @Override
@@ -127,7 +131,6 @@ public class Signinfrag extends Fragment {
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
-                        progressBar.setVisibility(View.GONE);
 
                         if (!task.isSuccessful()) {
                             // there was an error
@@ -140,17 +143,20 @@ public class Signinfrag extends Fragment {
                             }
                         } else {
                             SaveSharedPreference.setUserName(getContext(), emailtext.toLowerCase());
-
+                            databaseConnector.open();
                             if (!databaseConnector.isEmailExist(emailtext.toLowerCase())) {
+                                databaseConnector.close();
                                 saveCurrentDataToFB_DB(emailtext.toLowerCase());
+                            } else {
+                                progressBar.setVisibility(View.GONE);
+                                startActivity(new Intent(getActivity(), navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
+                                getActivity().finish();
+
                             }
-
-
                         }
                     }
                 });
     }
-
     public void saveCurrentDataToFB_DB(String email) {
         String[] fields = email.split("\\.");
         final String key = keyGenerator(fields);
@@ -163,6 +169,7 @@ public class Signinfrag extends Fragment {
                 databaseConnector.open();
                 databaseConnector.insertUser(userModel.getName(), userModel.getCompany(), String.valueOf(userModel.getB_date()), userModel.getEmail().toLowerCase(), key);
                 databaseConnector.close();
+                progressBar.setVisibility(View.GONE);
                 startActivity(new Intent(getActivity(), navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 getActivity().finish();
             }

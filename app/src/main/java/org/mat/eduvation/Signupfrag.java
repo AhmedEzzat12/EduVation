@@ -148,7 +148,7 @@ public class Signupfrag extends Fragment {
                             , email.getText().toString().toLowerCase(), UserModel.KEY);
                     databaseConnector.close();
                     SaveSharedPreference.setUserName(getContext(), email.getText().toString().toLowerCase());
-
+                    progressBar.setVisibility(View.GONE);
                     startActivity(new Intent(getContext(), navigation.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
                     getActivity().finish();
                 }

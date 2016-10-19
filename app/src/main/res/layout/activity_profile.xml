@@ -22,7 +22,7 @@
             android:layout_below="@+id/app_bar2"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/profile_avatar_placeholder_large" />
 
 
         <LinearLayout

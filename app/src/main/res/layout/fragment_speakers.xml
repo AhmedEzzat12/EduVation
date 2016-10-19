@@ -15,9 +15,6 @@
         tools:context="org.mat.eduvation.navigation_items.Schedule"
         >
 
-
-
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,16 +22,14 @@
             android:orientation="horizontal"
             >
 
-
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageView1"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/speaker"
+                android:src="@drawable/asad"
                 />
-
 
 
 
@@ -51,8 +46,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="20dp"
-                    android:text="ibrahim magdy"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="DR Asad-Alam"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#020202" />
 
                 <TextView
@@ -61,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
-                    android:text="co founder of pizza"
+                    android:text="EGYPT WORLD BANK DIRECTOR"
                     android:textAppearance="?android:attr/textAppearanceSmall"
 
                     android:textColor="#010101" />
@@ -78,16 +73,14 @@
             android:orientation="horizontal">
 
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageView"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/speaker"
+                android:src="@drawable/sakr"
                 />
-
-
 
 
             <LinearLayout
@@ -103,8 +96,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="20dp"
-                    android:text="ibrahim magdy"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="DR.Mahmoud Sakr"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#020202" />
 
                 <TextView
@@ -113,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
-                    android:text="co founder of pizza"
+                    android:text="CHAIRMAN ACADEMY OF SCIENTIFIC RESEARCH AND TECHNOLOGY"
                     android:textAppearance="?android:attr/textAppearanceSmall"
 
                     android:textColor="#010101" />
@@ -132,13 +125,13 @@
             android:orientation="horizontal">
 
 
-        <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView3"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:src="@drawable/speaker"
+                android:src="@drawable/salah"
             />
 
 
@@ -157,8 +150,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="14dp"
                 android:layout_marginTop="20dp"
-                android:text="ibrahim magdy"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Ayman Salah"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#020202" />
 
             <TextView
@@ -167,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
-                android:text="co founder of pizza"
+                android:text="MEDIA INNOVATION EXPERT"
                 android:textAppearance="?android:attr/textAppearanceSmall"
 
                 android:textColor="#010101" />
@@ -186,13 +179,13 @@
             android:orientation="horizontal">
 
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageView34"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/speaker"
+                android:src="@drawable/maher"
                 />
 
 
@@ -211,8 +204,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="20dp"
-                    android:text="ibrahim magdy"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="DR Maher Ezzat"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#020202" />
 
                 <TextView
@@ -221,7 +214,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
-                    android:text="co founder of pizza"
+                    android:text="THE SECRETARY GENERAL 7H ACADEMY"
                     android:textAppearance="?android:attr/textAppearanceSmall"
 
                     android:textColor="#010101" />
@@ -241,13 +234,13 @@
             >
 
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageView15"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/speaker"
+                android:src="@drawable/habash"
                 />
 
 
@@ -266,8 +259,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="20dp"
-                    android:text="ibrahim magdy"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="DR Habash Elnady"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#020202" />
 
                 <TextView
@@ -276,7 +269,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
-                    android:text="co founder of pizza"
+                    android:text="CHAIRMAN OF ARISH UNIVERSITY"
                     android:textAppearance="?android:attr/textAppearanceSmall"
 
                     android:textColor="#010101" />
@@ -295,13 +288,13 @@
             android:orientation="horizontal">
 
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageView6"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/speaker"
+                android:src="@drawable/zaitoun"
                 />
 
 
@@ -320,8 +313,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="20dp"
-                    android:text="ibrahim magdy"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="DR. Mona Zaitoun"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#020202" />
 
                 <TextView
@@ -330,7 +323,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
-                    android:text="co founder of pizza"
+                    android:text="LECTURER OF CURRICULUM AND TEACHING METHODS AT FACULTY OF SPECIFIC EDUCATION, PORT SAID UNIVERSITY."
                     android:textAppearance="?android:attr/textAppearanceSmall"
 
                     android:textColor="#010101" />
@@ -349,13 +342,13 @@
             android:orientation="horizontal">
 
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageView37"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/speaker"
+                android:src="@drawable/elghandor"
                 />
 
 
@@ -374,8 +367,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="20dp"
-                    android:text="ibrahim magdy"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Ahmed EL-Ghandour"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#020202" />
 
                 <TextView
@@ -384,7 +377,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
-                    android:text="co founder of pizza"
+                    android:text="EL DA7EE7"
                     android:textAppearance="?android:attr/textAppearanceSmall"
 
                     android:textColor="#010101" />
@@ -403,13 +396,13 @@
             android:orientation="horizontal">
 
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/imageView384"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/speaker"
+                android:src="@drawable/tohamy"
                 />
 
 
@@ -428,7 +421,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="14dp"
                     android:layout_marginTop="20dp"
-                    android:text="ibrahim magdy"
+                    android:text="Ahmed Tohamy"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="#020202" />
 
@@ -438,7 +431,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
-                    android:text="co founder of pizza"
+                    android:text="CEO/GET TECH DONE"
                     android:textAppearance="?android:attr/textAppearanceSmall"
 
                     android:textColor="#010101" />
@@ -451,7 +444,55 @@
         </LinearLayout>
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="0dp"
+            android:orientation="horizontal">
 
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageView3844"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/wael" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="98dp"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/textView2844"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="20dp"
+                    android:text="DR. Wael EL-Mayyah"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="#020202" />
+
+                <TextView
+                    android:id="@+id/textView8344"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:text="THE FOUNDER OF WONDERLEARN FOR DEVELOPING CHILDREN'S SKILLS"
+
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+
+                    android:textColor="#010101" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
 
 
     </LinearLayout>
